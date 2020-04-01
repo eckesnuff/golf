@@ -73,7 +73,12 @@
             summaryView.querySelector('.hcp span').innerHTML=summary.hcp.toFixed(1);
         }
         const parseBoardInput= function(value){
-            value=value.replace("  ","");
+            value+="\n";
+            const repExp = /([a-zA-ZåäöÅÄÖ]+\n+)$/
+            while(value.match(repExp)){
+                value=value.replace(repExp,"");
+            }
+            value+="\n\n";
             let exp = new RegExp(/(\d{1,2})\n(\d{4}-\d{2}-\d{2})\n(.*?)\n(.*?)\n?(\d*?)\n?(\d*?)\n?(\d*,?\d*)\s\s/g);
             let matches;
             summary.rounds=[];

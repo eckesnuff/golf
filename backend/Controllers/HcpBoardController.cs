@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -17,7 +18,20 @@ namespace backend.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            return new string[] { "Works", "OK" };
+            var dirList = new List<string>();
+            foreach (var item in Directory.GetDirectories("/usr/bin"))
+            {
+                dirList.Add(item);
+            }
+            foreach (var item in Directory.GetFiles("/usr/bin"))
+            {
+                dirList.Add(item);
+            }
+            var dirExists = System.IO.File.Exists(Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH"));
+            dirList.AddRange(new string[] { "Works", "OK"
+            ,$"PUPPETEER_EXECUTABLE_PATH: {Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH")}"
+            ,$"File exists {dirExists}" });
+            return dirList;
         }
 
         // POST api/hcpboard
@@ -69,7 +83,7 @@ namespace backend.Controllers
     {
         public async Task<WorkResult> DoWork(string username, string password)
         {
-            await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
+            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
             var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
                 Headless = true

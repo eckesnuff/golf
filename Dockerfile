@@ -1,4 +1,20 @@
-FROM mcr.microsoft.com/dotnet/core/runtime:2.1
+#FROM mcr.microsoft.com/dotnet/core/runtime:2.1
+
+
+
+FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS build-env
+WORKDIR /app
+COPY backend/ .
+RUN ls -la
+
+RUN dotnet restore
+
+RUN dotnet build -c Release
+RUN dotnet publish -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/core/aspnet:2.1
+WORKDIR /app
+COPY --from=build-env /app/out .
 
 #####################
 #PUPPETEER RECIPE
@@ -25,21 +41,9 @@ USER pptruser
 #####################
 #END PUPPETEER RECIPE
 #####################
-
+ENV ASPNETCORE_URLS=http://+:5000
 ENV PUPPETEER_EXECUTABLE_PATH "/usr/bin/google-chrome-unstable"
-#COPY bin/Release/netcoreapp2.1/publish/ /app/
 
-FROM mcr.microsoft.com/dotnet/core/sdk:2.1 AS build-env
-WORKDIR /app
-COPY /backend/*.csproj ./
-RUN dotnet restore
-
-COPY /backend/*.* ./
-RUN dotnet publish -c Release -o out
-
-FROM mcr.microsoft.com/dotnet/core/aspnet:2.1
-WORKDIR /app
-COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "backend.dll"]
 
 #RUN dotnet build "web.csproj" -c Release -o /app/build

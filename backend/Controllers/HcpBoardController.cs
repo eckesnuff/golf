@@ -86,7 +86,8 @@ namespace backend.Controllers
             //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
             var browser = await Puppeteer.LaunchAsync(new LaunchOptions
             {
-                Headless = true
+                Headless = true,
+                Args = new[] { "--no-sandbox" }
             });
             var page = await browser.NewPageAsync();
             await page.SetRequestInterceptionAsync(true);

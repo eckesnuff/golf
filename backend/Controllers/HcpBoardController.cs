@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Net;
 using System.Net.Http;
@@ -25,6 +26,14 @@ namespace backend.Controllers
         [HttpPost]
         public async Task<ActionResult<WorkResult>> Post(Credentials credentials)
         {
+            if (!ModelState.IsValid)
+            {
+                return WorkResult.Error("user/pass format");
+            }
+            if (!credentials.UserName.Contains("-"))
+            {
+                credentials.UserName = credentials.UserName.Insert(6, "-");
+            }
             try
             {
                 var service = new WebRequester();
@@ -42,7 +51,9 @@ namespace backend.Controllers
     }
     public class Credentials
     {
+        [RegularExpression(@"^\d{6}-?\d{3}$",ErrorMessage="Fel format på golfId")]
         public string UserName { get; set; }
+        [Required(ErrorMessage="Password missing")]
         public string Password { get; set; }
     }
     public class WorkResult
@@ -88,7 +99,7 @@ namespace backend.Controllers
             dynamic loginResult = JsonConvert.DeserializeObject(content);
             if (loginResult.Success != true)
             {
-                return WorkResult.Error($"Kunde inte ansluta: {wr.StatusDescription}");
+                return WorkResult.Error($"Felaktigt user/pass: golfid:{creds.UserName}");
             }
 
             request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/Site/HCP");

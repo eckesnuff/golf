@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using PuppeteerSharp;
+using Newtonsoft.Json;
 
 namespace backend.Controllers
 {
@@ -18,20 +18,7 @@ namespace backend.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
         {
-            var dirList = new List<string>();
-            foreach (var item in Directory.GetDirectories("/usr/bin"))
-            {
-                dirList.Add(item);
-            }
-            foreach (var item in Directory.GetFiles("/usr/bin"))
-            {
-                dirList.Add(item);
-            }
-            var dirExists = System.IO.File.Exists(Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH"));
-            dirList.AddRange(new string[] { "Works", "OK"
-            ,$"PUPPETEER_EXECUTABLE_PATH: {Environment.GetEnvironmentVariable("PUPPETEER_EXECUTABLE_PATH")}"
-            ,$"File exists {dirExists}" });
-            return dirList;
+            return new string[] { "Works", "OK" };
         }
 
         // POST api/hcpboard
@@ -40,8 +27,8 @@ namespace backend.Controllers
         {
             try
             {
-                var service = new WebBrowser();
-                return await service.DoWork(credentials.UserName, credentials.Password);
+                var service = new WebRequester();
+                return await service.DoWork(credentials);
             }
             catch (Exception ex)
             {
@@ -79,49 +66,41 @@ namespace backend.Controllers
         public bool Success { get; set; }
         public string ResultData { get; set; }
     }
-    public class WebBrowser
+    public class WebRequester
     {
-        public async Task<WorkResult> DoWork(string username, string password)
+        public async Task<WorkResult> DoWork(Credentials creds)
         {
-            //await new BrowserFetcher().DownloadAsync(BrowserFetcher.DefaultRevision);
-            var browser = await Puppeteer.LaunchAsync(new LaunchOptions
-            {
-                Headless = true,
-                Args = new[] { "--no-sandbox" }
-            });
-            var page = await browser.NewPageAsync();
-            await page.SetRequestInterceptionAsync(true);
-            var post = true;
-            page.Request += async (sender, e) =>
-            {
-                if (!post) return;
-                var payload = new Payload()
-                {
-                    Headers = new Dictionary<string, string>{
-                            {"Content-Type", "application/x-www-form-urlencoded; charset=UTF-8"}
-                        },
-                    Method = HttpMethod.Post,
-                    PostData = $"golfID={WebUtility.UrlEncode(username)}&password={WebUtility.UrlEncode(password)}&remember=false",
-                };
-                await e.Request.ContinueAsync(payload);
-                await page.SetRequestInterceptionAsync(false);
-                post = false;
-            };
-            var response = await page.GoToAsync("https://mingolf.golf.se/handlers/login");
-            dynamic loginResult = await response.JsonAsync();
-            if (loginResult.Success == true)
-            {
-                var hcpReponse = await page.GoToAsync("https://mingolf.golf.se/Site/HCP");
-                if (hcpReponse.Status == HttpStatusCode.OK)
-                {
-                    var text = await hcpReponse.TextAsync();
-                    var match = Regex.Match(text, @"var\s*hcpRounds\s=\s({.*?});");
-                    return match.Success ? WorkResult.OK(match.Groups[1].Value) : WorkResult.Error($"Unable to parse text: {text}");
-                }
-                return WorkResult.Error($"Status from hcp page was: {hcpReponse.Status} text: {hcpReponse.StatusText}");
-            }
-            return WorkResult.Error("Kunde inte logga in");
-        }
+            var cookieContainer = new CookieContainer();
+            var request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/handlers/login");
+            request.CookieContainer = cookieContainer;
+            request.Method = HttpMethod.Post.Method;
+            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
+            var data = $"golfID={WebUtility.UrlEncode(creds.UserName)}&password={WebUtility.UrlEncode(creds.Password)}&remember=false";
 
+            var reqStream = await request.GetRequestStreamAsync();
+            await reqStream.WriteAsync(System.Text.Encoding.UTF8.GetBytes(data), 0, data.Length);
+            var wr = (HttpWebResponse)await request.GetResponseAsync();
+            if (wr.StatusCode != HttpStatusCode.OK)
+                return WorkResult.Error($"Kunde inte ansluta till login: {wr.StatusDescription}");
+            var receiveStream = wr.GetResponseStream();
+            var reader = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+            string content = reader.ReadToEnd();
+            dynamic loginResult = JsonConvert.DeserializeObject(content);
+            if (loginResult.Success != true)
+            {
+                return WorkResult.Error($"Kunde inte ansluta: {wr.StatusDescription}");
+            }
+
+            request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/Site/HCP");
+            request.CookieContainer = cookieContainer;
+            wr = (HttpWebResponse)await request.GetResponseAsync();
+            if (wr.StatusCode != HttpStatusCode.OK)
+                return WorkResult.Error($"Kunde inte ansluta till hcp sida: {wr.StatusDescription}");
+            receiveStream = wr.GetResponseStream();
+            reader = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+            content = reader.ReadToEnd();
+            var match = Regex.Match(content, @"var\s*hcpRounds\s=\s({.*?});");
+            return match.Success ? WorkResult.OK(match.Groups[1].Value) : WorkResult.Error($"Unable to parse text: {content}");
+        }
     }
 }

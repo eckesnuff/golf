@@ -218,6 +218,7 @@
             }).catch(e => {
                 printMessage("Något fel inträffade... Kontakta ansvarig", true);
                 console.log(e)
+                done();
             });
         };
         const addScore = function (score, slope, cr, par, name) {

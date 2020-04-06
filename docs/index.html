@@ -126,7 +126,7 @@
         }
     </style>
     <script>
-        let board, summaryView;
+        let summaryView;
         document.addEventListener("DOMContentLoaded", function () {
             init();
         });
@@ -137,9 +137,13 @@
         const init = function () {
             summaryView = document.querySelector(".summary");
             document.querySelector("#parseBoard").addEventListener('click', function (e) {
+                const user = {
+                    'UserName': document.getElementById('golfId').value,
+                    'Password': document.getElementById('password').value
+                };
                 let button = e.currentTarget;
                 button.disabled = true;
-                loadBoard(() => {
+                loadBoard(user).then(() => {
                     button.disabled = false;
                 });
             });
@@ -183,6 +187,7 @@
 
         }
         const convertResult = function (rawData) {
+            rawData = JSON.parse(rawData);
             let rounds = [];
             rawData.Items.forEach(item => {
                 rounds.push({
@@ -197,29 +202,25 @@
             });
             return rounds;
         }
-        const loadBoard = async function (done) {
-            const user = {
-                'UserName': document.getElementById('golfId').value,
-                'Password': document.getElementById('password').value
-            }
+        const loadBoard = async function (user) {
             printMessage("Loggar in och hämtar...");
-            fetchData(user).then((data) => {
+            try {
+                var data = await fetchData(user);
                 if (!data.success) {
                     printMessage("FEL! " + data.resultData, true);
                     return;
                 }
                 console.log('fetched', data.resultData);
-                convertResult(JSON.parse(data.resultData));
+                summary.rounds = convertResult(data.resultData);
                 setCookie();
-                summary.rounds = calcHcp();
+                calcHcp();
                 renderResult();
-                done();
                 printMessage("Rundor laddade...");
-            }).catch(e => {
+            }
+            catch (e) {
                 printMessage("Något fel inträffade... Kontakta ansvarig", true);
-                console.log(e)
-                done();
-            });
+                console.error(e)
+            };
         };
         const addScore = function (score, slope, cr, par, name) {
             console.log(score, slope, cr, name, par);

@@ -136,7 +136,7 @@
         };
         const init = function () {
             summaryView = document.querySelector(".summary");
-            document.querySelector("#parseBoard").addEventListener("click", (e) =>  {
+            document.querySelector("#parseBoard").addEventListener("click", (e) => {
                 const user = {
                     "UserName": document.getElementById("golfId").value,
                     "Password": document.getElementById("password").value
@@ -153,11 +153,11 @@
                 let opt = select.options[select.selectedIndex];
                 addScore(score, opt.dataset.slope, opt.dataset.cr, opt.dataset.par, opt.text);
             });
-            loadCookie();
+            loadFromStorage();
             renderResult();
         };
         const renderResult = function () {
-            if (summary.rounds.length > 0){
+            if (summary.rounds.length > 0) {
                 document.body.classList.add("loaded");
             }
             let table = summaryView.querySelector("table");
@@ -190,9 +190,9 @@
         const convertResult = function (rawData) {
             rawData = JSON.parse(rawData);
             let rounds = [];
-            let uncalculatedScores=0;
+            let uncalculatedScores = 0;
             for (var item of rawData.Items) {
-                if(!item.IsCalculated){
+                if (!item.IsCalculated) {
                     uncalculatedScores++;
                     continue;
                 }
@@ -207,8 +207,8 @@
                 });
             }
             return {
-                rounds:rounds,
-                nUncalculatedScores:uncalculatedScores
+                rounds: rounds,
+                nUncalculatedScores: uncalculatedScores
             }
         };
         const loadBoard = async function (user) {
@@ -222,13 +222,13 @@
                 console.log("fetched", data.resultData);
                 let result = convertResult(data.resultData);
                 summary.rounds = result.rounds
-                setCookie();
+                storeRounds();
                 calcHcp();
                 renderResult();
-                if(result.nUncalculatedScores>0){
+                if (result.nUncalculatedScores > 0) {
                     printMessage(`Rundor laddades in men ${result.nUncalculatedScores} har inte kalkylerats, mata vänligen in dessa manuellt`);
                 }
-                else{
+                else {
                     printMessage("Alla registrerade rundor laddade");
                 }
             }
@@ -267,32 +267,23 @@
                 e.top8 = top8.some(tRound => tRound.hcp == e.hcp);
             })
         };
-        const setCookie = function () {
-            let cname = "board";
-            let cvalue = JSON.stringify(summary.rounds.slice(0,20));
-            let d = new Date();
-            let days = 90
-            d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            let expires = "expires=" + d.toUTCString();
-            document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+        const storeRounds = function () {
+            window.localStorage.setItem("rounds", JSON.stringify(summary.rounds))
         };
-        const loadCookie = function () {
-            let cookie = getCookie("board");
-            if (cookie) {
-                summary.rounds = JSON.parse(cookie);
-                calcHcp();
+        const loadFromStorage = function () {
+            let rounds = window.localStorage.getItem("rounds");
+            if (rounds) {
+                try {
+                    summary.rounds = JSON.parse(rounds);
+                    calcHcp();
+                }
+                catch (e) {
+                    window.localStorage.removeItem("rounds");
+                    console.error(e);
+                }
             }
         };
-        const getCookie = function (name) {
-            let nameEQ = name + "=";
-            let ca = document.cookie.split(";");
-            for (let i = 0; i < ca.length; i++) {
-                let c = ca[i];
-                while (c.charAt(0) == " ") c = c.substring(1, c.length);
-                if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
-            }
-            return null;
-        };
+
         const printMessage = function (msg, error = false) {
             let msgEl = document.getElementById("message");
             msgEl.innerHTML = msg;

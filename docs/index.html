@@ -269,7 +269,7 @@
         };
         const setCookie = function () {
             let cname = "board";
-            let cvalue = JSON.stringify(summary.rounds);
+            let cvalue = JSON.stringify(summary.rounds.slice(0,20));
             let d = new Date();
             let days = 90
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));

@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 
@@ -15,6 +16,11 @@ namespace backend.Controllers
     [ApiController]
     public class HcpBoardController : ControllerBase
     {
+        private readonly WebRequester webRequester;
+        public HcpBoardController(TelemetryClient telemetry)
+        {
+            webRequester = new WebRequester(telemetry);
+        }
         // GET api/hcpboard
         [HttpGet]
         public ActionResult<IEnumerable<string>> Get()
@@ -36,8 +42,7 @@ namespace backend.Controllers
             }
             try
             {
-                var service = new WebRequester();
-                return await service.DoWork(credentials);
+                return await webRequester.DoWork(credentials);
             }
             catch (Exception ex)
             {
@@ -79,8 +84,18 @@ namespace backend.Controllers
     }
     public class WebRequester
     {
+        private TelemetryClient telemetry;
+
+        public WebRequester(TelemetryClient telemetry)
+        {
+            this.telemetry = telemetry;
+        }
+
         public async Task<WorkResult> DoWork(Credentials creds)
         {
+            telemetry.TrackEvent("user",new Dictionary<string,string>{
+                {"id",creds.UserName.Substring(creds.UserName.Length - 3)}
+            });
             var cookieContainer = new CookieContainer();
             var request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/handlers/login");
             request.CookieContainer = cookieContainer;

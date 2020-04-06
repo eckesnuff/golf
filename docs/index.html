@@ -136,10 +136,10 @@
         };
         const init = function () {
             summaryView = document.querySelector(".summary");
-            document.querySelector("#parseBoard").addEventListener('click', function (e) {
+            document.querySelector("#parseBoard").addEventListener("click", (e) =>  {
                 const user = {
-                    'UserName': document.getElementById('golfId').value,
-                    'Password': document.getElementById('password').value
+                    "UserName": document.getElementById("golfId").value,
+                    "Password": document.getElementById("password").value
                 };
                 let button = e.currentTarget;
                 button.disabled = true;
@@ -147,42 +147,43 @@
                     button.disabled = false;
                 });
             });
-            document.querySelector("#addScore").addEventListener('click', function (e) {
+            document.querySelector("#addScore").addEventListener("click", () => {
                 let score = document.querySelector("input[name='score']").value;
                 let select = document.querySelector("select[name='course']");
                 let opt = select.options[select.selectedIndex];
                 addScore(score, opt.dataset.slope, opt.dataset.cr, opt.dataset.par, opt.text);
             });
             loadCookie();
-            renderResult()
+            renderResult();
         };
         const renderResult = function () {
-            if (summary.rounds.length > 0)
+            if (summary.rounds.length > 0){
                 document.body.classList.add("loaded");
-            let table = summaryView.querySelector('table');
+            }
+            let table = summaryView.querySelector("table");
             let resultHtml = "";
             summary.rounds.forEach((e, index) => {
                 let cssClass = e.top8 ? "top8" : index > 19 ? "old" : "";
                 resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1)}</td></tr>`;
             });
             table.querySelector("tbody").innerHTML = resultHtml;
-            summaryView.querySelector('.hcp span').innerHTML = summary.hcp.toFixed(1);
-            summaryView.querySelector('.hcp').setAttribute("title", summary.hcp);
+            summaryView.querySelector(".hcp span").innerHTML = summary.hcp.toFixed(1);
+            summaryView.querySelector(".hcp").setAttribute("title", summary.hcp);
         }
 
         const fetchData = async function (credentials) {
-            const response = await fetch('https://vilfordgolf.azurewebsites.net/api/hcpboard', {
-                method: 'POST',
+            const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
+                method: "POST",
                 headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json;charset=UTF-8'
+                    "Accept": "application/json",
+                    "Content-Type": "application/json;charset=UTF-8"
                 },
                 body: JSON.stringify(credentials)
             });
             if (response.ok) {
                 return await response.json();
             } else {
-                throw new Error('backend not found');
+                throw new Error("backend not found");
             }
 
         }
@@ -201,16 +202,16 @@
                 });
             });
             return rounds;
-        }
+        };
         const loadBoard = async function (user) {
             printMessage("Loggar in och hämtar...");
             try {
-                var data = await fetchData(user);
+                let data = await fetchData(user);
                 if (!data.success) {
                     printMessage("FEL! " + data.resultData, true);
                     return;
                 }
-                console.log('fetched', data.resultData);
+                console.log("fetched", data.resultData);
                 summary.rounds = convertResult(data.resultData);
                 setCookie();
                 calcHcp();
@@ -220,7 +221,7 @@
             catch (e) {
                 printMessage("Något fel inträffade... Kontakta ansvarig", true);
                 console.error(e)
-            };
+            }
         };
         const addScore = function (score, slope, cr, par, name) {
             console.log(score, slope, cr, name, par);
@@ -242,7 +243,7 @@
             })
             calcHcp();
             renderResult();
-        }
+        };
         const calcHcp = function () {
             let top8 = summary.rounds.slice(0, 20).sort(function (a, b) {
                 return a.hcp - b.hcp;
@@ -251,46 +252,42 @@
             summary.rounds.forEach(e => {
                 e.top8 = top8.some(tRound => tRound.hcp == e.hcp);
             })
-        }
+        };
         const setCookie = function () {
             let cname = "board";
             let cvalue = JSON.stringify(summary.rounds);
             let d = new Date();
             let days = 90
             d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
-            var expires = "expires=" + d.toUTCString();
+            let expires = "expires=" + d.toUTCString();
             document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-        }
+        };
         const loadCookie = function () {
             let cookie = getCookie("board");
             if (cookie) {
                 summary.rounds = JSON.parse(cookie);
                 calcHcp();
             }
-        }
+        };
         const getCookie = function (name) {
-            var nameEQ = name + "=";
-            var ca = document.cookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            let nameEQ = name + "=";
+            let ca = document.cookie.split(";");
+            for (let i = 0; i < ca.length; i++) {
+                let c = ca[i];
+                while (c.charAt(0) == " ") c = c.substring(1, c.length);
                 if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
             }
             return null;
-        }
-        printMessage = function (msg, error = false) {
-            var msgEl = document.getElementById("message");
+        };
+        const printMessage = function (msg, error = false) {
+            let msgEl = document.getElementById("message");
             msgEl.innerHTML = msg;
             if (error) {
                 msgEl.setAttribute("class", "error");
             }
             else
                 msgEl.setAttribute("class", "info");
-        }
-        const tempData = {
-            "Items": [{ "RoundNumber": 0, "RoundDate": "20200328T102500", "HCPResultAdjusted": { "Text": "3,6", "Value": 3.5954545454545457 }, "Type": 1, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Mikael Johansson", "PlayedHoles": 18, "PCC": 0, "Points": 38, "GrossAdjusted": 0, "HCPResult": { "Text": "3,6", "Value": 3.5954545454545457 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20200322T121700", "HCPResultAdjusted": { "Text": "5,7", "Value": 5.6931297709923667 }, "Type": 1, "ClubName": "Möre Golfklubb", "CourseName": "Möre Golfklubb", "MarkerName": "Mikael Johansson", "PlayedHoles": 18, "PCC": 0, "Points": 36, "GrossAdjusted": 0, "HCPResult": { "Text": "5,7", "Value": 5.6931297709923667 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190929T163000", "HCPResultAdjusted": { "Text": "9,8", "Value": 9.7880281690140851 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 31, "GrossAdjusted": 0, "HCPResult": { "Text": "9,8", "Value": 9.7880281690140851 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190922T100500", "HCPResultAdjusted": { "Text": "4,5", "Value": 4.4515151515151512 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 38, "GrossAdjusted": 0, "HCPResult": { "Text": "4,5", "Value": 4.4515151515151512 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190914T095000", "HCPResultAdjusted": { "Text": "8,2", "Value": 8.1964788732394354 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Mikael Johansson", "PlayedHoles": 18, "PCC": 0, "Points": 33, "GrossAdjusted": 0, "HCPResult": { "Text": "8,2", "Value": 8.1964788732394354 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190901T140000", "HCPResultAdjusted": { "Text": "6,1", "Value": 6.0786206896551729 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Kalmar Golfklubb", "PlayedHoles": 18, "PCC": 0, "Points": 36, "GrossAdjusted": 0, "HCPResult": { "Text": "6,1", "Value": 6.0786206896551729 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190901T090000", "HCPResultAdjusted": { "Text": "10,8", "Value": 10.754482758620689 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Kalmar Golfklubb", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "10,8", "Value": 10.754482758620689 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190824T090500", "HCPResultAdjusted": { "Text": "5,3", "Value": 5.3075757575757576 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Tomas Jagodzinski", "PlayedHoles": 18, "PCC": 0, "Points": 37, "GrossAdjusted": 0, "HCPResult": { "Text": "5,3", "Value": 5.3075757575757576 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190818T142500", "HCPResultAdjusted": { "Text": "13,7", "Value": 13.727407407407407 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Fredrik Bolin", "PlayedHoles": 18, "PCC": 0, "Points": 27, "GrossAdjusted": 0, "HCPResult": { "Text": "13,7", "Value": 13.727407407407407 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190812T195000", "HCPResultAdjusted": { "Text": "6,6", "Value": 6.6049295774647891 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 35, "GrossAdjusted": 0, "HCPResult": { "Text": "6,6", "Value": 6.6049295774647891 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190810T085500", "HCPResultAdjusted": { "Text": "11,3", "Value": 11.3 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Mikael Johansson", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "11,3", "Value": 11.3 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190807T090000", "HCPResultAdjusted": { "Text": "5,0", "Value": 5.0133802816901412 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 38, "GrossAdjusted": 0, "HCPResult": { "Text": "5,0", "Value": 5.0133802816901412 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190804T142000", "HCPResultAdjusted": { "Text": "8,2", "Value": 8.1964788732394354 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 33, "GrossAdjusted": 0, "HCPResult": { "Text": "8,2", "Value": 8.1964788732394354 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190728T200000", "HCPResultAdjusted": { "Text": "1,8", "Value": 1.8302816901408452 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 43, "GrossAdjusted": 0, "HCPResult": { "Text": "1,8", "Value": 1.8302816901408452 }, "Adjustment": null, "Adjustments": null, "IsCounting": true, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190724T125000", "HCPResultAdjusted": { "Text": "13,3", "Value": 13.328205128205129 }, "Type": 4, "ClubName": "Bedinge Golfklubb", "CourseName": "BeGK 18 hål", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "13,3", "Value": 13.328205128205129 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190716T195500", "HCPResultAdjusted": { "Text": "9,6", "Value": 9.5878787878787879 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 34, "GrossAdjusted": 0, "HCPResult": { "Text": "9,6", "Value": 9.5878787878787879 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190714T194000", "HCPResultAdjusted": { "Text": "6,6", "Value": 6.6049295774647891 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 38, "GrossAdjusted": 0, "HCPResult": { "Text": "6,6", "Value": 6.6049295774647891 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null },
-            { "RoundNumber": 0, "RoundDate": "20190710T090000", "HCPResultAdjusted": { "Text": "13,0", "Value": 13.012121212121214 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Kalmar Golfklubb", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "13,0", "Value": 13.012121212121214 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190630T090000", "HCPResultAdjusted": { "Text": "9,8", "Value": 9.7880281690140851 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Tomas Jagodzinski", "PlayedHoles": 18, "PCC": 0, "Points": 33, "GrossAdjusted": 0, "HCPResult": { "Text": "9,8", "Value": 9.7880281690140851 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190627T195000", "HCPResultAdjusted": { "Text": "12,2", "Value": 12.175352112676057 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "12,2", "Value": 12.175352112676057 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190623T172000", "HCPResultAdjusted": { "Text": "11,4", "Value": 11.379577464788731 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Gamla Banan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 31, "GrossAdjusted": 0, "HCPResult": { "Text": "11,4", "Value": 11.379577464788731 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190512T093500", "HCPResultAdjusted": { "Text": "10,4", "Value": 10.443939393939393 }, "Type": 4, "ClubName": "Kalmar Golfklubb", "CourseName": "Nya Banan", "MarkerName": "Fredrik Bolin", "PlayedHoles": 18, "PCC": 0, "Points": 32, "GrossAdjusted": 0, "HCPResult": { "Text": "10,4", "Value": 10.443939393939393 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190505T120000", "HCPResultAdjusted": { "Text": "12,3", "Value": 12.256153846153847 }, "Type": 4, "ClubName": "Degeberga-Widtsköfle Golfklubb", "CourseName": "Slottsbanan", "MarkerName": "Andreas Stening", "PlayedHoles": 18, "PCC": 0, "Points": 30, "GrossAdjusted": 0, "HCPResult": { "Text": "12,3", "Value": 12.256153846153847 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190504T163000", "HCPResultAdjusted": { "Text": "7,9", "Value": 7.9358778625954205 }, "Type": 4, "ClubName": "Kristianstads Golfklubb i Åhus", "CourseName": "Åhus Östra ", "MarkerName": "Jonas Björk", "PlayedHoles": 18, "PCC": 0, "Points": 35, "GrossAdjusted": 0, "HCPResult": { "Text": "7,9", "Value": 7.9358778625954205 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }, { "RoundNumber": 0, "RoundDate": "20190504T111500", "HCPResultAdjusted": { "Text": "5,4", "Value": 5.4407407407407415 }, "Type": 4, "ClubName": "Kristianstads Golfklubb i Åhus", "CourseName": "Åhus Västra", "MarkerName": "Tomas Jagodzinski", "PlayedHoles": 18, "PCC": 0, "Points": 38, "GrossAdjusted": 0, "HCPResult": { "Text": "5,4", "Value": 5.4407407407407415 }, "Adjustment": null, "Adjustments": null, "IsCounting": false, "IsCalculated": true, "HoleScores": null }], "TotalItems": 70, "NumberOfCountingRounds": 8, "DataOffset": 25, "SearchStartDate": null, "SearchEndDate": null, "ShowUncalculatedRoundsMessage": false
-        }
+        };
     </script>
 </head>
 

@@ -190,7 +190,12 @@
         const convertResult = function (rawData) {
             rawData = JSON.parse(rawData);
             let rounds = [];
-            rawData.Items.forEach(item => {
+            let uncalculatedScores=0;
+            for (var item of rawData.Items) {
+                if(!item.IsCalculated){
+                    uncalculatedScores++;
+                    continue;
+                }
                 rounds.push({
                     date: item.RoundDate.substring(0, 8),
                     course: `${item.ClubName} ${item.CourseName}`,
@@ -200,8 +205,11 @@
                     hcp: item.HCPResultAdjusted.Value,
                     top8: item.IsCounting
                 });
-            });
-            return rounds;
+            }
+            return {
+                rounds:rounds,
+                nUncalculatedScores:uncalculatedScores
+            }
         };
         const loadBoard = async function (user) {
             printMessage("Loggar in och hämtar...");
@@ -212,11 +220,17 @@
                     return;
                 }
                 console.log("fetched", data.resultData);
-                summary.rounds = convertResult(data.resultData);
+                let result = convertResult(data.resultData);
+                summary.rounds = result.rounds
                 setCookie();
                 calcHcp();
                 renderResult();
-                printMessage("Rundor laddade...");
+                if(result.nUncalculatedScores>0){
+                    printMessage(`Rundor laddades in men ${result.nUncalculatedScores} har inte kalkylerats, mata vänligen in dessa manuellt`);
+                }
+                else{
+                    printMessage("Alla registrerade rundor laddade");
+                }
             }
             catch (e) {
                 printMessage("Något fel inträffade... Kontakta ansvarig", true);

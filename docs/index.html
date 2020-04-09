@@ -265,7 +265,7 @@
             }).slice(0, 8);
             summary.hcp = top8.reduce((total, item) => total + item.hcp, 0) / top8.length;
             summary.rounds.forEach(e => {
-                e.top8 = top8.some(tRound => tRound.hcp == e.hcp);
+                e.top8 = top8.some(tRound => tRound == e);
             })
         };
         const storeRounds = ()=> {

@@ -240,7 +240,7 @@
         };
         const addScore = (score, slope, cr, par, name) => {
             console.log(score, slope, cr, name, par);
-            let playHcp = Math.round(summary.hcp * (Number(slope) / 113) + (Number(cr) - Number(par)));
+            let playHcp = Math.round(summary.hcp.toFixed(1) * (Number(slope) / 113) + (Number(cr) - Number(par)));
             console.log("spelhcp:", playHcp);
             let strokes = Number(score);
             if (strokes < 50) {

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="sv-SE">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Golf by Vilford</title>
+    <meta name="description" content="Hämta resultat och räkna ut ditt nya hcp">
+    <meta charset="utf-8">
+    <style>
+        html {
+            font-family: 'Open Sans', sans-serif;
+            color: #666;
+        }
+
+        form {
+            max-width: 600px;
+        }
+
+        fieldset {
+            padding: 1em 1em;
+            margin: 1em 0;
+        }
+
+        legend {
+            padding: 0;
+            font-weight: bold;
+            font-size: 1.2em;
+        }
+
+
+        label {
+            display: block;
+            padding: 0 0 1em 0em;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            display: block;
+            padding: .5em 0;
+            margin: .5em 0;
+            width: 90%
+        }
+
+        button[type="button"] {
+            padding: .5em 1em;
+        }
+
+
+        textarea {
+            width: 90%;
+            height: 200px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        tr {
+            padding: 1em;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 1em;
+        }
+
+        div.main {
+            max-width: 1024px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1em;
+        }
+
+        .summary {
+            display: none;
+            margin-bottom: 1em;
+        }
+
+        .loaded .summary {
+            display: block;
+
+        }
+
+        .hcp {
+            padding: 1em;
+            font-weight: bold;
+            display: inline-block;
+            border: 1px solid #eee;
+            margin-top: 1em;
+        }
+
+        tr.top8 {
+            background-color: #ecf8f0;
+        }
+
+        tr.old {
+            background-color: rgba(212, 129, 129, 0.952);
+        }
+
+        #message {
+            display: none;
+            padding: 1em;
+            margin: 1em 0;
+            color: #3c763d;
+            background-color: #dff0d8;
+            border-color: #d6e9c6;
+        }
+
+        #message.info {
+            display: block;
+        }
+
+        #message.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            display: block;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .opt {
+                display: none;
+            }
+        }
+    </style>
+    <script>
+        let summaryView;
+        document.addEventListener("DOMContentLoaded", function () {
+            init();
+        });
+        const summary = {
+            hcp: 0,
+            rounds: []
+        };
+        const init = () => {
+            summaryView = document.querySelector(".summary");
+            document.querySelector("#parseBoard").addEventListener("click", (e) => {
+                const user = {
+                    "UserName": document.getElementById("golfId").value,
+                    "Password": document.getElementById("password").value
+                };
+                let button = e.currentTarget;
+                button.disabled = true;
+                loadBoard(user).then(() => {
+                    button.disabled = false;
+                });
+            });
+            document.querySelector("#addScore").addEventListener("click", () => {
+                let score = document.querySelector("input[name='score']").value;
+                let select = document.querySelector("select[name='course']");
+                let opt = select.options[select.selectedIndex];
+                addScore(score, opt.dataset.slope, opt.dataset.cr, opt.dataset.par, opt.text);
+            });
+            loadFromStorage();
+            renderResult();
+        };
+        const renderResult = () => {
+            if (summary.rounds.length > 0) {
+                document.body.classList.add("loaded");
+            }
+            let table = summaryView.querySelector("table");
+            let resultHtml = "";
+            summary.rounds.forEach((e, index) => {
+                let cssClass = e.top8 ? "top8" : index > 19 ? "old" : "";
+                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1)}</td></tr>`;
+            });
+            table.querySelector("tbody").innerHTML = resultHtml;
+            summaryView.querySelector(".hcp span").innerHTML = summary.hcp.toFixed(1);
+            summaryView.querySelector(".hcp").setAttribute("title", summary.hcp);
+        }
+        const fetchData = async (credentials) => {
+            const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
+                method: "POST",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json;charset=UTF-8"
+                },
+                body: JSON.stringify(credentials)
+            });
+            if (response.ok) {
+                return await response.json();
+            } else {
+                throw new Error("backend not found");
+            }
+
+        }
+        const convertResult = (rawData) => {
+            rawData = JSON.parse(rawData);
+            let rounds = [];
+            let uncalculatedScores = 0;
+            for (var item of rawData.Items) {
+                if (!item.IsCalculated) {
+                    uncalculatedScores++;
+                    continue;
+                }
+                rounds.push({
+                    date: item.RoundDate.substring(0, 8),
+                    course: `${item.ClubName} ${item.CourseName}`,
+                    roundType: item.Type,
+                    nHoles: item.PlayedHoles,
+                    score: item.Points,
+                    hcp: item.HCPResultAdjusted.Value,
+                    top8: item.IsCounting
+                });
+            }
+            return {
+                rounds: rounds,
+                nUncalculatedScores: uncalculatedScores
+            }
+        };
+        const loadBoard = async (user) => {
+            printMessage("Loggar in och hämtar...");
+            try {
+                let data = await fetchData(user);
+                if (!data.success) {
+                    printMessage("FEL! " + data.resultData, true);
+                    return;
+                }
+                console.log("fetched", data.resultData);
+                let result = convertResult(data.resultData);
+                summary.rounds = result.rounds
+                storeRounds();
+                calcHcp();
+                renderResult();
+                if (result.nUncalculatedScores > 0) {
+                    printMessage(`Rundor laddades in men ${result.nUncalculatedScores} har inte kalkylerats, mata vänligen in dessa manuellt`);
+                }
+                else {
+                    printMessage("Alla registrerade rundor laddade");
+                }
+            }
+            catch (e) {
+                printMessage("Något fel inträffade... Kontakta ansvarig", true);
+                console.error(e)
+            }
+        };
+        const addScore = (score, slope, cr, par, name) => {
+            console.log(score, slope, cr, name, par);
+            let playHcp = Math.round(summary.hcp.toFixed(1) * (Number(slope) / 113) + (Number(cr) - Number(par)));
+            console.log("spelhcp:", playHcp);
+            let strokes = Number(score);
+            if (strokes < 50) {
+                strokes = Number(par) + playHcp - (Number(strokes) - 36)
+            }
+            let hcp = 113 / Number(slope) * (strokes - Number(cr));
+            summary.rounds.unshift({
+                index: Number(99),
+                date: "Manuell",
+                course: name,
+                roundType: "Sällskap?",
+                nHoles: 18,
+                score: 36 + playHcp + Number(par) - strokes,
+                hcp: hcp
+            })
+            calcHcp();
+            renderResult();
+        };
+        const calcHcp = () => {
+            let top8 = summary.rounds.slice(0, 20).sort(function (a, b) {
+                return a.hcp - b.hcp;
+            }).slice(0, 8);
+            summary.hcp = top8.reduce((total, item) => total + item.hcp, 0) / top8.length;
+            summary.rounds.forEach(e => {
+                e.top8 = top8.some(tRound => tRound == e);
+            })
+        };
+        const storeRounds = ()=> {
+            window.localStorage.setItem("rounds", JSON.stringify(summary.rounds))
+        };
+        const loadFromStorage = ()=> {
+            let rounds = window.localStorage.getItem("rounds");
+            if (rounds) {
+                try {
+                    summary.rounds = JSON.parse(rounds);
+                    calcHcp();
+                }
+                catch (e) {
+                    window.localStorage.removeItem("rounds");
+                    console.error(e);
+                }
+            }
+        };
+        const printMessage = (msg, error = false) => {
+            let msgEl = document.getElementById("message");
+            msgEl.innerHTML = msg;
+            if (error) {
+                msgEl.setAttribute("class", "error");
+            }
+            else
+                msgEl.setAttribute("class", "info");
+        };
+    </script>
+</head>
+
+<body>
+    <div class="main">
+        <h1>WGH v2</h1>
+        <form>
+            <fieldset>
+                <legend>Mata in score</legend>
+                <label>Bana:
+                    <select name="course">
+                        <option value="1" data-slope="142" data-cr="71.7" data-par="72">Kalmar GK - Gamla (Gul)</option>
+                        <option value="2" data-slope="132" data-cr="67.8" data-par="71">Kalmar GK - Nya (Gul)</option>
+                        <option value="3" data-slope="151" data-cr="73.5" data-par="72">Catalunya - Stadium (Gul)</option>
+                        <option value="4" data-slope="135" data-cr="71.5" data-par="72">Åhus - Västra (Gul)</option>
+                        <option value="5" data-slope="124" data-cr="71.0" data-par="72">Åhus - Östra (Gul)</option>
+                        <option value="6" data-slope="131" data-cr="71.5" data-par="72">Degeberga - Widtsköfle Golfklubb (Gul)</option>
+                    </select>
+                </label>
+                <label>Poäng eller antal slag brutto (max netto-dubbel)
+                    <input type="number" name="score">
+                </label>
+                <button id="addScore" type="button">Lägg till</button>
+            </fieldset>
+        </form>
+        <div class="summary">
+            <span class="hcp">HCP: <span></span></span>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Rond</th>
+                        <th class="opt">Datum</th>
+                        <th class="opt">Klubb</th>
+                        <th class="opt">Hål</th>
+                        <th>Poäng</th>
+                        <th>Hcp-resultat</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+
+        <form class="login-panel">
+            <fieldset>
+                <legend>Hämta ronder från min golf</legend>
+                <label>Golf-id:<input type="text" id="golfId" name="golfId"></label>
+                <label>Lösenord:<input type="password" id="password" name="password"></label>
+                <button type="button" id="parseBoard">Läs in från min golf</button>
+                <div id="message" />
+            </fieldset>
+        </form>
+        <a href="/v1.html">gamla varianten med copy/paste</a>
+    </div>
+
+</body>
+
+</html>

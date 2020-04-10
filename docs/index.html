@@ -24,10 +24,12 @@ body{
 }
 .panel{
     border-radius: 5px;
-    background-color:rgb(0, 0, 0,.3);
+    
 }
 .toggle{
     transition: opacity 0.5s linear;
+    background-color:rgb(0, 0, 0,.3);
+    border-radius: 5px;
 }
 .hidden{
     opacity: 0;
@@ -145,6 +147,12 @@ tr.old {
     .opt {
         display: none;
     }
+    /* .content{
+        background: transparent;
+    }
+    .toggle{
+        background-color:rgb(0, 0, 0,.3);
+    } */
 }
     </style>
     <script>
@@ -341,7 +349,7 @@ tr.old {
     <body>
         <div id="message"></div>
         <div class="tools">
-            <input type="button" value="Hämta rounder" data-toggle="login" />
+            <input type="button" value="Hämta rundor" data-toggle="login" />
             <input type="button" value="Lägg till" data-toggle="add"/>
         </div>
         <div class="content panel">

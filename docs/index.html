@@ -11,6 +11,10 @@ input[type=text], input[type=button],select {
 -webkit-appearance: none;
 -webkit-border-radius: 0;
 border-radius: 0;
+font-size:100%;
+}
+input{
+    box-sizing: border-box;
 }
 body{
     font-family: 'Open Sans', sans-serif;
@@ -18,7 +22,7 @@ body{
     font-size:16px;
     margin: 0;
     padding:0 1em;
-    background: radial-gradient(circle at top right, rgba(71, 105, 105, 1) 0%, rgb(11, 57, 57) 100%);
+    background: radial-gradient(circle at top right, rgb(97, 163, 163) 0%, rgb(51, 72, 72) 100%);
     background-color: rgba(11,57,57);
     background-attachment: fixed;
 }
@@ -40,7 +44,7 @@ div.content{
     position: relative;
     margin:1em auto;
     max-width: 1024px;
-    padding: 2em 1em 6em;
+    padding: 0em 1em 6em;
 }
 div.tools {
     padding:1em 0;
@@ -64,6 +68,7 @@ div.tools {
     border: 1px solid #fff;
     cursor: pointer;
 }
+
 label{
     display:block;
     margin: 1em 0em .5em 0;
@@ -75,26 +80,26 @@ form{
     padding: 1em 0;
     border:1px solid #000;
 }
-form button{
+form .button{
     border-radius: 5px;
     border: 1px solid #000;
     background: #000;
     color: #fff;
     padding: 1em;
-    width: 49%;
 }
-form button:hover{
+form .button:hover{
     border: 1px solid #fff;
     cursor: pointer;
 }
 fieldset{border:0;color:#fff;}
 form input,form select{padding:1em;background-color:rgb(0, 0, 0,.3);color:#fff;font-size: 100%;}
 select{max-width: 340px;}
-form #score{width:50px;border:0; border: 1px solid #fff;}
+form #score{width:90px;border:0; border: 1px solid #fff;}
 form #golfId,form #password{width:200px;border:0; border: 1px solid #fff;margin: 0em 0 1em;}
 form #course{width: 100%;}
 form #course option {background: #fff; color:#000;}
-form button {width: auto;height: 47px;}
+
+
 svg{
     max-width: 80px;
     position: absolute;
@@ -105,7 +110,8 @@ svg{
 table { border-collapse: collapse;width: 100%;}
 tr {padding: 1em;}
 th,td {text-align: left;padding: 1em;}
-.summary {display: none;padding-bottom: 1em;}
+td span.pcc{float:right;}
+.summary {display: none;padding-bottom: 1em; text-align: center;}
 .loaded .summary {display: block;}
 #message{
     position: fixed;
@@ -137,22 +143,21 @@ th,td {text-align: left;padding: 1em;}
 }
 
 tr.top8 {
-    background-color: rgba(66,107,20,.53);
+    background-color: rgba(0, 66, 8, 0.46);
 }
 
 tr.old {
     background-color: rgba(140, 24, 24, 0.84);
+    opacity: .5;
 }
 @media only screen and (max-width: 600px) {
     .opt {
         display: none;
     }
-    /* .content{
-        background: transparent;
-    }
-    .toggle{
-        background-color:rgb(0, 0, 0,.3);
-    } */
+    .button{width:100%}
+    input{width:100%;}
+    form #score,form #golfId,form #password{width:100%}
+    input[type="submit"]{margin-top: 1em;}
 }
     </style>
     <script>
@@ -166,7 +171,8 @@ tr.old {
         };
         const init = () => {
             summaryView = document.querySelector(".summary");
-            document.querySelector("#parseBoard").addEventListener("click", (e) => {
+            document.getElementById("login").addEventListener("submit", (e) => {
+                e.preventDefault();
                 const user = {
                     "UserName": document.getElementById("golfId").value,
                     "Password": document.getElementById("password").value
@@ -177,7 +183,8 @@ tr.old {
                     button.disabled = false;
                 });
             });
-            document.querySelector("#addScore").addEventListener("click", () => {
+            document.getElementById("add").addEventListener("submit", (e) => {
+                e.preventDefault();
                 let score = document.querySelector("input[name='score']").value;
                 let select = document.querySelector("select[name='course']");
                 let opt = select.options[select.selectedIndex];
@@ -194,6 +201,8 @@ tr.old {
                     });
                     active.scrollIntoView({ behavior: 'smooth', block: 'end'});
                     active.classList.remove('hidden');
+                    let fElement = active.querySelector('input');
+                    fElement && fElement.focus();
                     
                 });
             });
@@ -208,11 +217,18 @@ tr.old {
             let resultHtml = "";
             summary.rounds.forEach((e, index) => {
                 let cssClass = e.top8 ? "top8" : index > 19 ? "old" : "";
-                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1)}</td></tr>`;
+                let pcc="";
+                if(e.pcc){
+                    pcc=` <span class="pcc">(${e.pcc>0?"+"+e.pcc:e.pcc})</span>`;
+                }
+                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1)}${pcc}</td></tr>`;
             });
             table.querySelector("tbody").innerHTML = resultHtml;
             summaryView.querySelector(".hcp span").innerHTML = summary.hcp.toFixed(1);
             summaryView.querySelector(".hcp").setAttribute("title", summary.hcp);
+            document.getElementById("course").querySelectorAll('option').forEach((opt)=>{
+                opt.innerHTML = `${opt.dataset.name} (${calcPlayHcp(opt.dataset.slope,opt.dataset.cr,opt.dataset.par)})`;
+            });
         }
         const fetchData = async (credentials) => {
             const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
@@ -246,7 +262,8 @@ tr.old {
                     nHoles: item.PlayedHoles,
                     score: item.Points,
                     hcp: item.HCPResultAdjusted.Value,
-                    top8: item.IsCounting
+                    top8: item.IsCounting,
+                    pcc: item.PCC
                 });
             }
             return {
@@ -282,8 +299,7 @@ tr.old {
             }
         };
         const addScore = (score, slope, cr, par, name) => {
-            console.log(score, slope, cr, name, par);
-            let playHcp = Math.round(summary.hcp.toFixed(1) * (Number(slope) / 113) + (Number(cr) - Number(par)));
+            let playHcp = calcPlayHcp(slope,cr,par);
             console.log("spelhcp:", playHcp);
             let strokes = Number(score);
             if (strokes < 50) {
@@ -302,11 +318,15 @@ tr.old {
             calcHcp();
             renderResult();
         };
+        const calcPlayHcp = (slope, cr, par) => Math.round(
+            Number(summary.hcp.toFixed(1)) * (Number(slope) / 113) + (Number(cr) - Number(par)));
         const calcHcp = () => {
             let top8 = summary.rounds.slice(0, 20).sort(function (a, b) {
                 return a.hcp - b.hcp;
             }).slice(0, 8);
-            summary.hcp = top8.reduce((total, item) => total + item.hcp, 0) / top8.length;
+            summary.hcp = top8.reduce((acc, item) =>{
+               return acc + Number(item.hcp.toFixed(1));
+            }, 0) / top8.length;
             summary.rounds.forEach(e => {
                 e.top8 = top8.some(tRound => tRound == e);
             })
@@ -356,17 +376,20 @@ tr.old {
         <form class="add hidden toggle" id="add">
             <fieldset>
                 <legend>Mata in score</legend>
-                <label for="course">Bana:                </label>
+                <label for="course">Bana:</label>
                     <select name="course" id="course">
-                        <option value="1" data-slope="142" data-cr="71.7" data-par="72">Kalmar GK - Gamla (Gul)</option>
-                        <option value="2" data-slope="132" data-cr="67.8" data-par="71">Kalmar GK - Nya (Gul)</option>
-                        <option value="3" data-slope="151" data-cr="73.5" data-par="72">Catalunya - Stadium (Gul)</option>
-                        <option value="4" data-slope="135" data-cr="71.5" data-par="72">Åhus - Västra (Gul)</option>
-                        <option value="5" data-slope="124" data-cr="71.0" data-par="72">Åhus - Östra (Gul)</option>
-                        <option value="6" data-slope="131" data-cr="71.5" data-par="72">Degeberga - Widtsköfle Golfklubb (Gul)</option>
+                        <option value="1" data-slope="142" data-cr="71.7" data-par="72" data-name="Kalmar GK - Gamla (Gul)">Kalmar GK - Gamla (Gul)</option>
+                        <option value="2" data-slope="132" data-cr="67.8" data-par="71" data-name="Kalmar GK - Nya (Gul)">Kalmar GK - Nya (Gul)</option>
+                        <option value="3" data-slope="151" data-cr="73.5" data-par="72" data-name="Catalunya - Stadium (Gul)">Catalunya - Stadium (Gul)</option>
+                        <option value="4" data-slope="135" data-cr="71.5" data-par="72" data-name="Åhus - Västra (Gul)">Åhus - Västra (Gul)</option>
+                        <option value="5" data-slope="131" data-cr="71.8" data-par="72" data-name="Åhus - Östra (Gul)">Åhus - Östra (Gul)</option>
+                        <option value="6" data-slope="131" data-cr="71.5" data-par="72" data-name="Degeberga - Widtsköfle Golfklubb (Gul)">Degeberga - Widtsköfle Golfklubb (Gul)</option>
                     </select>
                 <label for="score">Poäng eller antal slag brutto (max netto-dubbel)</label>
-                <div class="score">                <input type="number" name="score" id="score">                <button id="addScore" type="button">Lägg till</button></div>
+                <div class="score">
+                    <input type="number" name="score" id="score">                
+                    <input type="submit" class="button" id="addScore" value="Lägg till" />
+                </div>
             </fieldset>
         </form>
         <form class="login toggle hidden" id="login">
@@ -376,7 +399,7 @@ tr.old {
                 <input type="text" id="golfId" name="golfId">
                 <label for="password">Lösenord:</label>
                 <input type="password" id="password" name="password">
-                <button type="button" id="parseBoard">Läs in från min golf</button>
+                <input type="submit" class="button" id="parseBoard" value="Läs in från min golf" />
             </fieldset>
         </form>
         <div class="summary">

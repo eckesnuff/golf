@@ -160,7 +160,7 @@ tr.old {
     background-color: rgba(140, 24, 24, 0.84);
     opacity: .5;
 }
-@media only screen and (max-width: 600px) {
+@@media only screen and (max-width: 600px) {
     .opt {
         display: none;
     }
@@ -264,8 +264,9 @@ tr.old {
             }
         }
         const fetchData = async (credentials) => {
-            const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
+            const response = await fetch("https://localhost:5001/api/hcpboard", {
                 method: "POST",
+                //mode:"no-cors",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json;charset=UTF-8"

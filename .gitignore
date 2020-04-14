@@ -38,3 +38,4 @@ msbuild.wrn
 
 # chrome
 .local-chromium/
+backend/appsettings.Development.json

@@ -356,8 +356,9 @@ tr.old {
             top = top.slice(0, calcCondition.topCount);
             
             summary.hcp = top.reduce((acc, item) =>{
-               return acc + Number(item.hcp.toFixed(1));
+               return acc + Number((item.hcp+0.00001).toFixed(1));
             }, 0) / top.length + calcCondition.seed;
+            summary.hcp+=0.000001;
 
             summary.rounds.forEach(e => {
                 e.top8 = top.some(tRound => tRound == e);

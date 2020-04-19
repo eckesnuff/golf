@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Net;
-using System.Net.Http;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using backend.Services;
+using backend.Models;
+using Microsoft.AspNetCore.Hosting;
+using System.Security.Cryptography;
+using System.Text;
+using Microsoft.Extensions.Configuration;
 
 namespace backend.Controllers
 {
@@ -16,117 +16,106 @@ namespace backend.Controllers
     [ApiController]
     public class HcpBoardController : ControllerBase
     {
-        private readonly WebRequester webRequester;
-        public HcpBoardController(TelemetryClient telemetry)
+        private readonly MyGolfService myGolfService;
+        private readonly TelemetryClient telemetry;
+        private readonly IHostingEnvironment env;
+        private readonly Persistence persistence;
+        private readonly IConfiguration configuration;
+        private readonly MyGolfDataConverter dataConverter;
+
+        public HcpBoardController(TelemetryClient telemetry, IHostingEnvironment env, Persistence persistence, IConfiguration configuration)
         {
-            webRequester = new WebRequester(telemetry);
+            myGolfService = new MyGolfService(telemetry);
+            dataConverter = new MyGolfDataConverter(telemetry);
+            this.telemetry = telemetry;
+            this.env = env;
+            this.persistence = persistence;
+            this.configuration = configuration;
         }
         // GET api/hcpboard
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult<Result> Get()
         {
-            return new string[] { "Works", "OK" };
+            var path = System.IO.Path.Combine(env.ContentRootPath, "rounds.html");
+            var data = System.IO.File.ReadAllText(path);
+            try
+            {
+                var result = dataConverter.ConvertToData(data,null);
+                return Result.OK("Whent fine").WithData(result);
+            }
+            catch (Exception ex)
+            {
+                return Result.Error(ex.Message);
+            }
         }
 
         // POST api/hcpboard
         [HttpPost]
-        public async Task<ActionResult<WorkResult>> Post(Credentials credentials)
+        public async Task<ActionResult<Result>> Post(Credentials creds)
         {
             if (!ModelState.IsValid)
             {
-                return WorkResult.Error("user/pass format");
+                return Result.Error("user/pass format");
             }
-            if (!credentials.UserName.Contains("-"))
+            var obfuscatedGid=creds.UserName.Substring(0,6);
+            telemetry.TrackEvent("user", new Dictionary<string, string>{
+                {"id",obfuscatedGid}});
+
+            var result = await myGolfService.Login(creds);
+            if (!result.Success)
             {
-                credentials.UserName = credentials.UserName.Insert(6, "-");
+                return result;
             }
-            try
+            var hash=GenerateUniqueId(creds.UserName);
+            var persistantTask = persistence.GetGolferAsync(hash);
+            var myGolfDataTask = myGolfService.GetMyGolfRawData();
+            await Task.WhenAll(persistantTask, myGolfDataTask);
+            GolferDoc doc = null;
+            if (persistantTask.IsCompletedSuccessfully)
             {
-                return await webRequester.DoWork(credentials);
+                doc = persistantTask.Result;
             }
-            catch (Exception ex)
+            if (myGolfDataTask.Result.Success)
             {
-                return new WorkResult
+                var convertedResult = dataConverter.ConvertToData(myGolfDataTask.Result.Data,obfuscatedGid);
+                if (convertedResult.IsValid())
                 {
-                    Success = false,
-                    ResultData = ex.ToString()
-                };
+                    await persistence.SaveGolferAsync(new GolferDoc
+                    {
+                        Modified = DateTime.UtcNow,
+                        Data = convertedResult,
+                        Id = hash
+                    });
+                    return Result.OK().WithData(convertedResult);
+                }
+                else
+                {
+                    Result.Error("Kunde inte parsa rundor");
+                }
             }
-        }
-    }
-    public class Credentials
-    {
-        [RegularExpression(@"^\d{6}-?\d{3}$",ErrorMessage="Fel format på golfId")]
-        public string UserName { get; set; }
-        [Required(ErrorMessage="Password missing")]
-        public string Password { get; set; }
-    }
-    public class WorkResult
-    {
-        public static WorkResult Error(string message)
-        {
-            return new WorkResult
+            else if (doc != null)
             {
-                Success = false,
-                ResultData = message
-            };
-        }
-        public static WorkResult OK(string message)
-        {
-            return new WorkResult
-            {
-                Success = true,
-                ResultData = message
-            };
-        }
-        public bool Success { get; set; }
-        public string ResultData { get; set; }
-    }
-    public class WebRequester
-    {
-        private TelemetryClient telemetry;
-
-        public WebRequester(TelemetryClient telemetry)
-        {
-            this.telemetry = telemetry;
-        }
-
-        public async Task<WorkResult> DoWork(Credentials creds)
-        {
-            telemetry.TrackEvent("user",new Dictionary<string,string>{
-                {"id",creds.UserName.Substring(creds.UserName.Length - 3)}
-            });
-            var cookieContainer = new CookieContainer();
-            var request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/handlers/login");
-            request.CookieContainer = cookieContainer;
-            request.Method = HttpMethod.Post.Method;
-            request.ContentType = "application/x-www-form-urlencoded; charset=UTF-8";
-            var data = $"golfID={WebUtility.UrlEncode(creds.UserName)}&password={WebUtility.UrlEncode(creds.Password)}&remember=false";
-
-            var reqStream = await request.GetRequestStreamAsync();
-            await reqStream.WriteAsync(System.Text.Encoding.UTF8.GetBytes(data), 0, data.Length);
-            var wr = (HttpWebResponse)await request.GetResponseAsync();
-            if (wr.StatusCode != HttpStatusCode.OK)
-                return WorkResult.Error($"Kunde inte ansluta till login: {wr.StatusDescription}");
-            var receiveStream = wr.GetResponseStream();
-            var reader = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
-            string content = reader.ReadToEnd();
-            dynamic loginResult = JsonConvert.DeserializeObject(content);
-            if (loginResult.Success != true)
-            {
-                return WorkResult.Error($"Felaktigt user/pass: golfid:{creds.UserName}");
+                return Result.OK($"Kunde inte hämta från min golf, Rundorna är från {doc.Modified.ToString("d")}").WithData(doc.Data);
             }
+            return myGolfDataTask.Result;
 
-            request = (HttpWebRequest)WebRequest.Create("https://mingolf.golf.se/Site/HCP");
-            request.CookieContainer = cookieContainer;
-            wr = (HttpWebResponse)await request.GetResponseAsync();
-            if (wr.StatusCode != HttpStatusCode.OK)
-                return WorkResult.Error($"Kunde inte ansluta till hcp sida: {wr.StatusDescription}");
-            receiveStream = wr.GetResponseStream();
-            reader = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
-            content = reader.ReadToEnd();
-            var match = Regex.Match(content, @"var\s*hcpRounds\s=\s({.*?});");
-            return match.Success ? WorkResult.OK(match.Groups[1].Value) : WorkResult.Error($"Unable to parse text: {content}");
+        }
+
+        private string GenerateUniqueId(string golfId)
+        {
+            var salt = configuration["Salt"];
+            var input = golfId+salt;
+            using (MD5 md5Hash = MD5.Create())
+            {
+                byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+                StringBuilder sBuilder = new StringBuilder();
+                for (int i = 0; i < data.Length; i++)
+                {
+                    sBuilder.Append(data[i].ToString("x2"));
+                }
+                return sBuilder.ToString();
+            }
         }
     }
 }
+    

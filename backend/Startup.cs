@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using backend.Models;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -23,6 +25,11 @@ namespace backend
                 x.SuppressModelStateInvalidFilter = true;
             });
             services.AddApplicationInsightsTelemetry();
+            services.AddSingleton<Persistence>((s) =>{
+                return new Persistence(
+                    new Uri(Configuration["CosmosDB:URL"]),
+                            Configuration["CosmosDB:PrimaryKey"]);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -38,12 +45,12 @@ namespace backend
                 app.UseHsts();
             }
             //app.use
-//             app.UseEndpoints(endpoints =>
-// {
-//     endpoints.MapControllerRoute(
-//         name: "default",
-//         pattern: "{controller=Home}/{action=Index}/{id?}");
-// });
+            //             app.UseEndpoints(endpoints =>
+            // {
+            //     endpoints.MapControllerRoute(
+            //         name: "default",
+            //         pattern: "{controller=Home}/{action=Index}/{id?}");
+            // });
             app.UseHttpsRedirection();
             app.UseMvcWithDefaultRoute();
         }

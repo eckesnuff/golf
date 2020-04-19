@@ -171,6 +171,7 @@ tr.old {
 }
     </style>
     <script>
+        let courses=[];
         let summaryView;
         document.addEventListener("DOMContentLoaded", function () {
             init();
@@ -187,6 +188,7 @@ tr.old {
 
         };
         const init = () => {
+            courses = [...document.getElementById("course").options];
             summaryView = document.querySelector(".summary");
             document.getElementById("login").addEventListener("submit", (e) => {
                 e.preventDefault();
@@ -224,6 +226,7 @@ tr.old {
                 });
             });
             loadFromStorage();
+            filterCourseOptions();
             renderResult();
         };
         const renderResult = () => {
@@ -240,28 +243,28 @@ tr.old {
                 if(e.pcc){
                     pcc=` <span class="pcc">(${e.pcc>0?"+"+e.pcc:e.pcc})</span>`;
                 }
-                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1)}${pcc}</td></tr>`;
+                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1).replace("-","+")}${pcc}</td></tr>`;
             });
             table.querySelector("tbody").innerHTML = resultHtml;
-            summaryView.querySelector(".hcp span").innerHTML = calculatedHcp.toFixed(1);
+            summaryView.querySelector(".hcp span").innerHTML = calculatedHcp.toFixed(1).replace("-","+");
             summaryView.querySelector(".hcp").setAttribute("title", calculatedHcp.hcp);
-            let gender="male";
-            gender = playerData.user.gender===2?"female":"male";
-            let courses=document.getElementById("course")
-            courses.querySelectorAll('option').forEach((opt)=>{
-                if(opt.dataset.gender===gender){
-                    opt.innerHTML = `${opt.dataset.name} (${calcPlayHcp(opt.dataset.slope,opt.dataset.cr,opt.dataset.par)})`;
-                    opt.style.display="block";
-                    opt.disabled=false;
-                }
-                else{
-                    opt.style.display="none";
-                    opt.disabled=true;
-                }
-            });
-            if(course.options[course.selectedIndex].disabled){
-                courses.value=[...courses.options].find(x=>!x.disabled).value;
+
+            for(let opt of document.getElementById("course").options){
+                opt.innerHTML = `${opt.dataset.name} (${calcPlayHcp(opt.dataset.slope,opt.dataset.cr,opt.dataset.par)})`;
             }
+        }
+        const filterCourseOptions = () => {
+            let courseSelect=document.getElementById("course");
+            [...courseSelect.options].forEach(()=>{
+                courseSelect.remove(0);
+            })
+            let gender = playerData.user.gender===2?"female":"male";
+            for(let course of courses){
+                if(course.dataset.gender===gender){
+                    courseSelect.add(course);
+                }
+            }
+            courseSelect.selectedIndex=0;
         }
         const fetchData = async (credentials) => {
             const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
@@ -292,6 +295,7 @@ tr.old {
                 let unCalcRounds= result.data.hcp.nUncalculatedScores;
                 storeRounds();
                 calcHcp();
+                filterCourseOptions();
                 renderResult();
                 if (unCalcRounds > 0) {
                     printMessage(`Rundor laddades in men ${unCalcRounds} st har inte kalkylerats, mata vänligen in dessa manuellt`,false,true);
@@ -413,19 +417,21 @@ tr.old {
                 <label for="course">Bana:</label>
                     <select name="course" id="course">
                         <option value="1" data-slope="142" data-cr="71.7" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Gul)">KGK - Gamla (Gul)</option>
-                        <option value="2" data-slope="145" data-cr="73.2" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Vit)">KGK - Gamla (Vit)</option>
-                        <option value="3" data-slope="133" data-cr="67.2" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Röd)">KGK - Gamla (Röd)</option>
-
                         <option value="4" data-slope="132" data-cr="67.8" data-par="71" data-gender="male" data-name="Kalmar GK - Nya (Gul)">KGK - Nya (Gul)</option>
+                        
+                        <option value="2" data-slope="145" data-cr="73.2" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Vit)">KGK - Gamla (Vit)</option>
                         <option value="5" data-slope="135" data-cr="69.6" data-par="71" data-gender="male" data-name="Kalmar GK - Nya (Vit)">KGK - Nya (Vit)</option>
+                        
+                        <option value="3" data-slope="133" data-cr="67.2" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Röd)">KGK - Gamla (Röd)</option>
                         <option value="6" data-slope="124" data-cr="64.1" data-par="71" data-gender="male" data-name="Kalmar GK - Nya (Röd)">KGK - Nya (Röd)</option>
-<!--damer-->
+                        <!--damer-->
                         <option value="7" data-slope="136" data-cr="72.9" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Röd)">KGK - Gamla (Röd)</option>
-                        <option value="8" data-slope="148" data-cr="78.3" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Gul)">KGK - Gamla (Gul)</option>
-                        <option value="9" data-slope="143" data-cr="76.3" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Blå)">KGK - Gamla (Blå)</option>
-
                         <option value="10" data-slope="126" data-cr="68.2" data-par="71" data-gender="female" data-name="Kalmar GK - Nya (Röd)">KGK - Nya (Röd)</option>
+                        
+                        <option value="8" data-slope="148" data-cr="78.3" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Gul)">KGK - Gamla (Gul)</option>
                         <option value="11" data-slope="136" data-cr="72.8" data-par="71" data-gender="female" data-name="Kalmar GK - Nya (Gul)">KGK - Nya (Gul)</option>
+                        
+                        <option value="9" data-slope="143" data-cr="76.3" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Blå)">KGK - Gamla (Blå)</option>
                         <option value="12" data-slope="131" data-cr="70.6" data-par="71" data-gender="female" data-name="Kalmar GK - Nya (Blå)">KGK - Nya (Blå)</option>
 
                         <option value="20" data-slope="131" data-cr="71.5" data-par="72" data-gender="male" data-name="Degeberga - Widtsköfle Golfklubb (Gul)">Degeberga - Widtsköfle Golfklubb (Gul)</option>

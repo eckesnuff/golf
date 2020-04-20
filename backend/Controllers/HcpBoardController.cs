@@ -67,6 +67,7 @@ namespace backend.Controllers
                 return result;
             }
             var hash=GenerateUniqueId(creds.UserName);
+            telemetry.Context.User.AuthenticatedUserId=hash;
             var persistantTask = persistence.GetGolferAsync(hash);
             var myGolfDataTask = myGolfService.GetMyGolfRawData();
             await Task.WhenAll(persistantTask, myGolfDataTask);

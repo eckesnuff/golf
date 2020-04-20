@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Hosting;
 using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Configuration;
+using System.Security.Principal;
+using System.Security.Claims;
 
 namespace backend.Controllers
 {
@@ -67,7 +69,8 @@ namespace backend.Controllers
                 return result;
             }
             var hash=GenerateUniqueId(creds.UserName);
-            telemetry.Context.User.AuthenticatedUserId=hash;
+            this.HttpContext.User= new GenericPrincipal(new GenericIdentity(hash),new string[]{"golfer"});
+
             var persistantTask = persistence.GetGolferAsync(hash);
             var myGolfDataTask = myGolfService.GetMyGolfRawData();
             await Task.WhenAll(persistantTask, myGolfDataTask);

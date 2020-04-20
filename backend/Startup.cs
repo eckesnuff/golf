@@ -1,7 +1,12 @@
 ﻿using System;
 using backend.Models;
+using Microsoft.ApplicationInsights.AspNetCore.TelemetryInitializers;
+using Microsoft.ApplicationInsights.Channel;
+using Microsoft.ApplicationInsights.DataContracts;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +35,7 @@ namespace backend
                     new Uri(Configuration["CosmosDB:URL"]),
                             Configuration["CosmosDB:PrimaryKey"]);
             });
+            services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,5 +60,21 @@ namespace backend
             app.UseHttpsRedirection();
             app.UseMvcWithDefaultRoute();
         }
+    }
+    public class CustomTelemetryInitializer : TelemetryInitializerBase {
+		public CustomTelemetryInitializer(IHttpContextAccessor httpContextAccessor)
+			 : base(httpContextAccessor)
+		{
+		}
+		protected override void OnInitializeTelemetry(HttpContext platformContext, RequestTelemetry requestTelemetry, ITelemetry telemetry)
+		{
+			if (platformContext?.User?.Identity == null)
+			{
+				return;
+			}
+
+			telemetry.Context.User.Id = platformContext.User.Identity.Name;
+            telemetry.Context.Session.Id=platformContext.User.Identity.Name;
+		}
     }
 }

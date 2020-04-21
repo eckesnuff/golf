@@ -68,13 +68,11 @@ namespace backend
 		}
 		protected override void OnInitializeTelemetry(HttpContext platformContext, RequestTelemetry requestTelemetry, ITelemetry telemetry)
 		{
-			if (platformContext?.User?.Identity == null)
+			if (platformContext?.User?.Identity.IsAuthenticated != true)
 			{
 				return;
 			}
-
 			telemetry.Context.User.Id = platformContext.User.Identity.Name;
-            telemetry.Context.Session.Id=platformContext.User.Identity.Name;
 		}
     }
 }

@@ -57,7 +57,7 @@ namespace backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Result.Error("user/pass format");
+                return Unauthorized(Result.Error("user/pass format"));
             }
             var obfuscatedGid=creds.UserName.Substring(0,6);
             telemetry.TrackEvent("user", new Dictionary<string, string>{
@@ -66,7 +66,7 @@ namespace backend.Controllers
             var result = await myGolfService.Login(creds);
             if (!result.Success)
             {
-                return result;
+                return Unauthorized(result);
             }
             var hash=GenerateUniqueId(creds.UserName);
             this.HttpContext.User= new GenericPrincipal(new GenericIdentity(hash),new string[]{"golfer"});

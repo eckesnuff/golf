@@ -279,7 +279,7 @@ tr.old {
                 },
                 body: JSON.stringify(credentials)
             });
-            if (response.ok) {
+            if (response.ok || response.status==401) {
                 return await response.json();
             } else {
                 throw new Error("backend not found");

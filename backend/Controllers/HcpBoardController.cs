@@ -94,7 +94,7 @@ namespace backend.Controllers
                 }
                 else
                 {
-                    Result.Error("Kunde inte parsa rundor");
+                    return Result.Error("Kunde inte parsa rundor");
                 }
             }
             else if (doc != null)

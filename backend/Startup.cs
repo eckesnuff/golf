@@ -72,7 +72,8 @@ namespace backend
 			{
 				return;
 			}
-			telemetry.Context.User.Id = platformContext.User.Identity.Name;
+			// telemetry.Context.User.Id = platformContext.User.Identity.Name;
+            telemetry.Context.User.AuthenticatedUserId=platformContext.User.Identity.Name;
 		}
     }
 }

@@ -271,7 +271,7 @@ tr.old {
             courseSelect.selectedIndex=0;
         }
         const fetchData = async (credentials) => {
-            const response = await fetch("https://vilfordgolf.azurewebsites.net/api/hcpboard", {
+            const response = await fetch("https://api.golf.vilford.com/api/hcpboard", {
                 method: "POST",
                 credentials: "include",
                 headers: {

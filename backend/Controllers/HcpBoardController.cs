@@ -57,7 +57,7 @@ namespace backend.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Unauthorized(Result.Error("user/pass format"));
+                return Unauthorized(Result.Error("Felaktigt golf-id eller lösenord"));
             }
             var obfuscatedGid=creds.UserName.Substring(0,6);
             telemetry.TrackEvent("user", new Dictionary<string, string>{

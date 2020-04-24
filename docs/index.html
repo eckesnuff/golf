@@ -292,7 +292,7 @@ tr.old {
             try {
                 let result = await fetchData(user);
                 if (!result.success) {
-                    printMessage("FEL! " + result.message, true,false);
+                    printMessage("Ett fel inträffade: " + result.message, true,false);
                     return;
                 }
                 console.log("fetched", result.data);

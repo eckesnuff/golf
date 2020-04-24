@@ -3,6 +3,7 @@ using Microsoft.Azure.Documents.Client;
 using Microsoft.Azure.Documents.Linq;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace backend.Models
@@ -18,7 +19,7 @@ namespace backend.Models
         public Persistence(Uri endpointUri, string primaryKey)
         {
             _databaseId = "GolferServiceDB";
-            _collectionName="Golfers";
+            _collectionName = "Golfers";
             _endpointUri = endpointUri;
             _primaryKey = primaryKey;
         }
@@ -39,30 +40,40 @@ namespace backend.Models
 
         public async Task SaveGolferAsync(GolferDoc sample)
         {
-            await EnsureSetupAsync();
-
             var documentCollectionUri = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionName);
             await _client.UpsertDocumentAsync(documentCollectionUri, sample);
         }
 
-        public async Task<GolferDoc> GetGolferAsync(string Id)
+        public async Task<GolferDoc> GetGolferAsync(string id)
         {
-            try{
-            await EnsureSetupAsync();
-
-            var documentUri = UriFactory.CreateDocumentUri(_databaseId, _collectionName, Id);
-            var result = await _client.ReadDocumentAsync<GolferDoc>(documentUri);
-            return result.Document;
+            try
+            {
+                var documentCollectionUri = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionName);
+                var queryResult = await _client.CreateDocumentQuery<GolferDoc>(documentCollectionUri).Where(
+                    x => x.Id == id
+                ).AsDocumentQuery().ToListAsync();
+                return queryResult.FirstOrDefault();
+                // var querySpec = new SqlQuerySpec{
+                //     QueryText="SELECT * FROM c WHERE c.id = @id",
+                //     Parameters = new SqlParameterCollection{
+                //         new SqlParameter {
+                //             Name="@id",
+                //             Value="id"
+                //         }
+                //     }
+                // };
+                // _client.
+                // //var documentUri = UriFactory.CreateDocumentUri(_databaseId, _collectionName, Id);
+                // var result = await _client.ReadDocumentAsync<GolferDoc>(documentUri);
+                // return result.Document;
             }
-            catch(Exception){
+            catch (Exception)
+            {
                 return null;
             }
         }
-
         public async Task<List<GolferDoc>> GetGolfersAsync()
         {
-            await EnsureSetupAsync();
-
             var documentCollectionUri = UriFactory.CreateDocumentCollectionUri(_databaseId, _collectionName);
 
             // build the query
@@ -76,8 +87,20 @@ namespace backend.Models
             {
                 results.AddRange(await queryAll.ExecuteNextAsync<GolferDoc>());
             }
-
             return results;
+        }
+    }
+    public static class CosmosExtensions
+    {
+        public static async Task<List<T>> ToListAsync<T>(this IDocumentQuery<T> queryable)
+        {
+            var list = new List<T>();
+            while (queryable.HasMoreResults)
+            {
+                var response = await queryable.ExecuteNextAsync<T>();
+                list.AddRange(response);
+            }
+            return list;
         }
     }
 }

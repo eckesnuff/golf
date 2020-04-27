@@ -97,6 +97,9 @@ form .button{
     padding: 1em;
     transition-duration: 0.3s;
 }
+form .button[disabled]{
+    opacity: 0.5;
+}
 form .button:hover{
     border-bottom: 1px solid rgba(0, 66, 8, 0.46);
     background-color: rgba(0, 66, 8, 0.46);
@@ -200,7 +203,7 @@ tr.old {
                     "UserName": document.getElementById("golfId").value,
                     "Password": document.getElementById("password").value
                 };
-                let button = e.currentTarget;
+                let button = e.currentTarget.querySelector('input[type=submit]');
                 button.disabled = true;
                 loadBoard(user).then(() => {
                     button.disabled = false;
@@ -416,6 +419,7 @@ tr.old {
    }
    );window[aiName]=aisdk,aisdk.queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
     </script>
+</script>
     </head>
     <body>
         <div id="message"></div>
@@ -437,6 +441,7 @@ tr.old {
                         
                         <option value="3" data-slope="133" data-cr="67.2" data-par="72" data-gender="male" data-name="Kalmar GK - Gamla (Röd)">KGK - Gamla (Röd)</option>
                         <option value="6" data-slope="124" data-cr="64.1" data-par="71" data-gender="male" data-name="Kalmar GK - Nya (Röd)">KGK - Nya (Röd)</option>
+                        <option value="13" data-slope="131" data-cr="71.1" data-par="72" data-gender="male" data-name="Västervik GK (Gul)">Västervik GK</option>
                         <!--damer-->
                         <option value="7" data-slope="136" data-cr="72.9" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Röd)">KGK - Gamla (Röd)</option>
                         <option value="10" data-slope="126" data-cr="68.2" data-par="71" data-gender="female" data-name="Kalmar GK - Nya (Röd)">KGK - Nya (Röd)</option>
@@ -446,6 +451,8 @@ tr.old {
                         
                         <option value="9" data-slope="143" data-cr="76.3" data-par="72" data-gender="female" data-name="Kalmar GK - Gamla (Blå)">KGK - Gamla (Blå)</option>
                         <option value="12" data-slope="131" data-cr="70.6" data-par="71" data-gender="female" data-name="Kalmar GK - Nya (Blå)">KGK - Nya (Blå)</option>
+
+                        <option value="13" data-slope="129" data-cr="71.3" data-par="72" data-gender="female" data-name="Västervik GK (Röd)">Västervik GK</option>
 
                         <option value="20" data-slope="131" data-cr="71.5" data-par="72" data-gender="male" data-name="Degeberga (Gul)">Degeberga (Gul)</option>
                     </select>

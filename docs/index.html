@@ -178,6 +178,7 @@ tr.old {
 }
     </style>
     <script>
+        let simulate=false;
         let courses=[];
         let summaryView;
         document.addEventListener("DOMContentLoaded", function () {
@@ -195,6 +196,7 @@ tr.old {
 
         };
         const init = () => {
+            simulate=location.hash&&location.hash.length>5;
             courses = [...document.getElementById("course").options];
             summaryView = document.querySelector(".summary");
             document.getElementById("login").addEventListener("submit", (e) => {
@@ -232,9 +234,14 @@ tr.old {
                     
                 });
             });
-            loadFromStorage();
-            filterCourseOptions();
-            renderResult();
+            if(simulate){
+                loadBoard({});
+            }
+            else{
+                loadFromStorage();
+                filterCourseOptions();
+                renderResult();
+            }
         };
         const renderResult = () => {
             let rounds = playerData.hcp.rounds;
@@ -274,14 +281,20 @@ tr.old {
             courseSelect.selectedIndex=0;
         }
         const fetchData = async (credentials) => {
-            const response = await fetch("https://api.golf.vilford.com/api/hcpboard", {
-                method: "POST",
+            let method="POST";
+            let hash= "";
+            if(simulate){
+                hash=`?userhash=${window.location.hash.substr(1)}`;
+                method="GET"
+            }
+            const response = await fetch("https://api.golf.vilford.com/api/hcpboard"+hash, {
+                method: method,
                 credentials: "include",
                 headers: {
                     "Accept": "application/json",
                     "Content-Type": "application/json;charset=UTF-8"
                 },
-                body: JSON.stringify(credentials)
+                body: !simulate ? JSON.stringify(credentials):null
             });
             if (response.ok || response.status==401) {
                 return await response.json();
@@ -301,7 +314,9 @@ tr.old {
                 console.log("fetched", result.data);
                 playerData=result.data;
                 let unCalcRounds= result.data.hcp.nUncalculatedScores;
-                storeRounds();
+                if(!simulate){
+                    storeRounds();
+                }
                 calcHcp();
                 filterCourseOptions();
                 renderResult();

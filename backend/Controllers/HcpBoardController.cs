@@ -36,19 +36,13 @@ namespace backend.Controllers
         }
         // GET api/hcpboard
         [HttpGet]
-        public ActionResult<Result> Get()
+        public async Task<ActionResult<Result>> Get(string userHash)
         {
-            var path = System.IO.Path.Combine(env.ContentRootPath, "rounds.html");
-            var data = System.IO.File.ReadAllText(path);
-            try
-            {
-                var result = dataConverter.ConvertToData(data,null);
-                return Result.OK("Whent fine").WithData(result);
+            var result= await persistence.GetGolferAsync(userHash);
+            if(result==null){
+                return NotFound();
             }
-            catch (Exception ex)
-            {
-                return Result.Error(ex.Message);
-            }
+            return Result.OK().WithData(result.Data);
         }
 
         // POST api/hcpboard

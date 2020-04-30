@@ -178,6 +178,8 @@ tr.old {
 }
     </style>
     <script>
+        Number.prototype.gRound= function(){return Math.round(Number(this)*10)/10};
+        Number.prototype.toGString= function(){return this.gRound().toFixed(1).replace("-","+")};
         let simulate=false;
         let courses=[];
         let summaryView;
@@ -257,11 +259,11 @@ tr.old {
                 if(e.pcc){
                     pcc=` <span class="pcc">(${e.pcc>0?"+"+e.pcc:e.pcc})</span>`;
                 }
-                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toFixed(1).replace("-","+")}${pcc}</td></tr>`;
+                resultHtml += `<tr class="${cssClass}"><td>${index + 1}</td><td class="opt">${e.date}</td><td class="opt">${e.course}</td><td class="opt">${e.nHoles}</td><td>${e.score}</td><td title="${e.hcp}">${e.hcp.toGString()}${pcc}</td></tr>`;
             });
             table.querySelector("tbody").innerHTML = resultHtml;
-            summaryView.querySelector(".hcp span").innerHTML = calculatedHcp.toFixed(1).replace("-","+");
-            summaryView.querySelector(".hcp").setAttribute("title", calculatedHcp.hcp);
+            summaryView.querySelector(".hcp span").innerHTML = calculatedHcp.toGString();
+            summaryView.querySelector(".hcp").setAttribute("title", calculatedHcp);
 
             for(let opt of document.getElementById("course").options){
                 opt.innerHTML = `${opt.dataset.name} (${calcPlayHcp(opt.dataset.slope,opt.dataset.cr,opt.dataset.par)})`;
@@ -357,7 +359,7 @@ tr.old {
             renderResult();
         };
         const calcPlayHcp = (slope, cr, par) => Math.round(
-            Number(playerData.hcp.calculatedHcp.toFixed(1)) * (Number(slope) / 113) + (Number(cr) - Number(par)));
+            Number(playerData.hcp.calculatedHcp.gRound()) * (Number(slope) / 113) + (Number(cr) - Number(par)));
         const getHcpCondition = (nr)=>{
             let res={topCount:8,seed:0};
             if(nr===20) return res;
@@ -385,9 +387,8 @@ tr.old {
             top = top.slice(0, calcCondition.topCount);
             
             playerData.hcp.calculatedHcp = top.reduce((acc, item) =>{
-               return acc + Number((item.hcp+0.00001).toFixed(1));
+               return acc + item.hcp.gRound();
             }, 0) / top.length + calcCondition.seed;
-            playerData.hcp.calculatedHcp+=0.000001;
             rounds.forEach(e => {
                 e.top8 = top.some(tRound => tRound == e);
             })

@@ -229,9 +229,9 @@ tr.old {
                             panel.classList.add("hidden");
                         }
                     });
-                    active.scrollIntoView({ behavior: 'smooth', block: 'end'});
+                    //active.scrollIntoView({ behavior: 'smooth', block: 'end'});
                     active.classList.remove('hidden');
-                    let fElement = active.querySelector('input');
+                    let fElement = active.querySelector('select,input');
                     fElement && fElement.focus();
                     
                 });

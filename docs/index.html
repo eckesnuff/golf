@@ -35,6 +35,18 @@ body{
     background-color: rgba(11,57,57);
     background-attachment: fixed;
 }
+.loaded .intro{
+    display: none;
+}
+.intro{
+    padding: 1em 10% 2em;
+    margin-bottom: 1em;
+}
+.intro p span{
+    background-color: rgba(0,0,0,0.3);
+    padding:4px;
+    display: inline-block;
+}
 .panel{
     border-radius: 5px;
     
@@ -58,7 +70,7 @@ div.content{
 div.tools {
     padding:1em 0;
     margin: 1em auto;
-    max-width: 66em;
+    max-width: 64em;
     position: relative;
 }
 .tools input{
@@ -106,20 +118,17 @@ form .button:hover{
     cursor: pointer;
 }
 fieldset{border:0;color:#fff;}
-form input,form select{padding:1em;background-color:rgb(0, 0, 0,.3);color:#fff;font-size: 100%;border:0;border-bottom:1px solid #000;}
+form input,form select{padding:1em;background-color:rgb(0, 0, 0,.3);color:#fff;font-size: 100%;border:0;border-bottom:2px solid rgb(0, 0, 0,.7)}
 select{max-width: 340px;}
-form #score{width:90px;}
+form #score{width:150px;}
 form #golfId,form #password{width:200px; margin: 0 0 1em;}
 form #course{width: 100%;}
 form #course option {background: #fff; color:#000;}
 
-
 svg{
     max-width: 80px;
-    position: absolute;
-    bottom: 2vh;
-    right: 4vw;
-    z-index: 0;
+    margin: 0 auto;
+    display: block;
 }
 table { border-collapse: collapse;width: 100%;}
 tr {padding: 1em;}
@@ -339,6 +348,7 @@ tr.old {
             }
         };
         const addScore = (score, slope, cr, par, name) => {
+            appInsights && appInsights.trackEvent({name: 'AddScore'});
             let playHcp = calcPlayHcp(slope,cr,par);
             console.log("spelhcp:", playHcp);
             let strokes = Number(score);
@@ -444,6 +454,14 @@ tr.old {
             <input type="button" value="Lägg till" data-toggle="add"/>
         </div>
         <div class="content panel">
+            <div class="intro toggle">
+                <h1>WGH-kalylatorn</h1>
+                <p>Klicka på knappen <span>Hämta rundor</span> för att läsa in dina registrerade rundor från min golf</p>
+                <p>När rundorna har hämtats kan du använda funktionen <span>Lägg till</span> för att antingen 
+                    mata in din senaste runda för att ta reda på ditt nya hcp eller bara spekulera i framtida resultat.
+                </p>
+                <p>HCP räknas ut med PCC 0</p>
+            </div>
         <form class="add hidden toggle" id="add">
             <fieldset>
                 <legend>Mata in score</legend>
@@ -474,7 +492,7 @@ tr.old {
                     </select>
                 <label for="score">Poäng eller antal slag brutto (max netto-dubbel)</label>
                 <div class="score">
-                    <input type="number" name="score" id="score">                
+                    <input type="number" name="score" id="score" placeholder="Poäng eller slag">                
                     <input type="submit" class="button" id="addScore" value="Lägg till" />
                 </div>
             </fieldset>
@@ -483,9 +501,9 @@ tr.old {
             <fieldset>
                 <legend>Hämta ronder från min golf</legend>
                 <label for="golfId">Golf-id:</label>
-                <input type="text" id="golfId" name="golfId">
+                <input type="text" id="golfId" name="golfId" placeholder="YYMMDD-NNN">
                 <label for="password">Lösenord:</label>
-                <input type="password" id="password" name="password">
+                <input type="password" id="password" name="password" placeholder="Ditt lösenord">
                 <input type="submit" class="button" id="parseBoard" value="Läs in från min golf" />
             </fieldset>
         </form>

@@ -9,7 +9,7 @@ public class Data
     public UserInfo User { get; set; }
     public bool IsValid()
     {
-        return Hcp?.Rounds?.Count > 0 && User?.Gender > 0;
+        return Hcp?.Rounds?.Count > 0; //&& User?.Gender == 0;
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using backend.Models;
+using backend.Services;
 using Microsoft.ApplicationInsights.AspNetCore.TelemetryInitializers;
 using Microsoft.ApplicationInsights.Channel;
 using Microsoft.ApplicationInsights.DataContracts;
@@ -35,6 +36,16 @@ namespace backend
                     new Uri(Configuration["CosmosDB:URL"]),
                             Configuration["CosmosDB:PrimaryKey"]);
             });
+            services.AddSingleton<GitCredentials>((s)=>{
+                return
+                new GitCredentials{
+                    UserName=Configuration["GIT:UserName"],
+                    Password=Configuration["GIT:Password"],
+                    OrgId=Configuration["GIT:OrgId"]
+                };
+            });
+            services.AddSingleton<MyGolfService>();
+            
             services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
         }
 

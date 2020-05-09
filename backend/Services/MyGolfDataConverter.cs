@@ -13,31 +13,32 @@ public class MyGolfDataConverter
     {
         this.telemetry = telemetry;
     }
-    public Data ConvertToData(string unparsedData,string obfustatedGid)
+    public Data ConvertToData(string myHCPPageData, string gitUserData,string obfustatedGid)
     {
-        var user = GetUserInfo(unparsedData);
+        var user = GetUserInfo(gitUserData);
         user.ObfuscatedGid=obfustatedGid;
         return new Data{
-            Hcp=GetPlayerRounds(unparsedData),
+            Hcp=GetPlayerRounds(myHCPPageData),
             User=user
         };
     }
-    private UserInfo GetUserInfo(string unparsedData)
+    private UserInfo GetUserInfo(string gitUserData)
     {
         var userInfo = new UserInfo();
+
         //for now it looks like this
-        //googletag.pubads().setTargeting('gen', ['man']);
-        var match = Regex.Match(unparsedData, @"'gen'\s*,\s*\[\s*'(.*?)'\s*\]");
+        //<Gender xsi:type="xsd:unsignedByte">1</Gender>
+        var match = Regex.Match(gitUserData, @"(\d)<\/Gender>");
         if (!match.Success){
             telemetry.TrackException(new Exception("Unable to parse gender"));
             return userInfo;
         }
-        userInfo.Gender=match.Groups[1].Value=="man"?Sex.Male:Sex.Female;
+        userInfo.Gender=match.Groups[1].Value=="1"?Sex.Male:Sex.Female;
         return userInfo;
     }
-    private Hcp GetPlayerRounds(string unparsedData)
+    private Hcp GetPlayerRounds(string myHCPPageData)
     {
-        var match = Regex.Match(unparsedData, @"var\s*hcpRounds\s=\s({.*?});");
+        var match = Regex.Match(myHCPPageData, @"var\s*hcpRounds\s=\s({.*?});");
         if (!match.Success)
         {
             telemetry.TrackException(new Exception("Unable to parse rounds"));

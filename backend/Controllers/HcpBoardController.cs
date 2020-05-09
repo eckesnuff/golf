@@ -25,14 +25,14 @@ namespace backend.Controllers
         private readonly IConfiguration configuration;
         private readonly MyGolfDataConverter dataConverter;
 
-        public HcpBoardController(TelemetryClient telemetry, IHostingEnvironment env, Persistence persistence, IConfiguration configuration)
+        public HcpBoardController(TelemetryClient telemetry, IHostingEnvironment env, Persistence persistence, IConfiguration configuration,MyGolfService myGolfService)
         {
-            myGolfService = new MyGolfService(telemetry);
-            dataConverter = new MyGolfDataConverter(telemetry);
+            this.myGolfService = myGolfService;
             this.telemetry = telemetry;
             this.env = env;
             this.persistence = persistence;
             this.configuration = configuration;
+            dataConverter = new MyGolfDataConverter(telemetry);
         }
         // GET api/hcpboard
         [HttpGet]
@@ -67,7 +67,8 @@ namespace backend.Controllers
 
             var persistantTask = persistence.GetGolferAsync(hash);
             var myGolfDataTask = myGolfService.GetMyGolfRawData();
-            await Task.WhenAll(persistantTask, myGolfDataTask);
+            var gitTask = myGolfService.GetGolfMatrikel(creds.UserName);
+            await Task.WhenAll(persistantTask, myGolfDataTask,gitTask);
             GolferDoc doc = null;
             if (persistantTask.IsCompletedSuccessfully)
             {
@@ -75,7 +76,7 @@ namespace backend.Controllers
             }
             if (myGolfDataTask.Result.Success)
             {
-                var convertedResult = dataConverter.ConvertToData(myGolfDataTask.Result.Data,obfuscatedGid);
+                var convertedResult = dataConverter.ConvertToData(myGolfDataTask.Result.Data,gitTask.Result.Data ,obfuscatedGid);
                 if (convertedResult.IsValid())
                 {
                     await persistence.SaveGolferAsync(new GolferDoc

@@ -14,10 +14,12 @@ namespace backend.Services
     {
         private CookieContainer _cookieContainer;
         private TelemetryClient telemetry;
+        private readonly GitCredentials gitCredentials;
 
-        public MyGolfService(TelemetryClient telemetry)
+        public MyGolfService(TelemetryClient telemetry,GitCredentials gitCredentials)
         {
             this.telemetry = telemetry;
+            this.gitCredentials = gitCredentials;
         }
 
         public async Task<Result> Login(Credentials creds)
@@ -75,5 +77,53 @@ namespace backend.Services
                 return Result.Error(ex.Message).WithData<string>(null);
             }
         }
+        public async Task<Result<string>> GetGolfMatrikel(string golfId){
+            try{
+                var request = (HttpWebRequest)WebRequest.Create("http://gitsys.golf.se/WSAPI/Ver_3/Member/Member3.asmx");
+                request.Method = HttpMethod.Post.Method;
+                request.ContentType = "text/xml; charset=utf-8";
+                request.Headers.Add("SOAPAction", "\"http://gitapi.golf.se/Member/Member3/GetMemberMatrikelData\"");
+
+                var reqStream = await request.GetRequestStreamAsync();
+                var data = GetEnvelope(golfId);
+                await reqStream.WriteAsync(System.Text.Encoding.UTF8.GetBytes(data), 0, data.Length);
+                var wr = (HttpWebResponse)await request.GetResponseAsync();
+                if (wr.StatusCode != HttpStatusCode.OK)
+                    return Result.Error($"Kunde inte ansluta till git: {wr.StatusDescription}").WithData<string>(null);
+                var receiveStream = wr.GetResponseStream();
+                var reader = new StreamReader(receiveStream, System.Text.Encoding.UTF8);
+                string content = reader.ReadToEnd();
+                return Result.OK().WithData<string>(content);
+            }
+            catch(Exception ex){
+                telemetry.TrackException(ex);
+                return Result.Error(ex.Message).WithData<string>(null);
+            }
+        }
+        private string GetEnvelope(string userId){
+            return $@"<?xml version=""1.0"" encoding=""utf-8""?>
+<soap:Envelope xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"" xmlns:soapenc=""http://schemas.xmlsoap.org/soap/encoding/"" xmlns:tns=""http://gitapi.golf.se/Member/Member3"" xmlns:types=""http://gitapi.golf.se/Member/Member3/encodedTypes"" xmlns:soap=""http://schemas.xmlsoap.org/soap/envelope/"">
+  <soap:Header>
+    <tns:SoapAuthenticationHeader>
+      <user xsi:type=""xsd:string"">{gitCredentials.UserName}</user>
+      <password xsi:type=""xsd:string"">{gitCredentials.Password}</password>
+    </tns:SoapAuthenticationHeader>
+  </soap:Header>
+  <soap:Body soap:encodingStyle=""http://schemas.xmlsoap.org/soap/encoding/"">
+    <tns:GetMemberMatrikelData>
+      <organizationalUnitID xsi:type=""xsd:string"">{gitCredentials.OrgId}</organizationalUnitID>
+      <golfID xsi:type=""xsd:string"">{userId}</golfID>
+      <memberType xsi:type=""tns:MemberTypes"">ALL</memberType>
+    </tns:GetMemberMatrikelData>
+  </soap:Body>
+</soap:Envelope>";
+        }
+    }
+
+    public class GitCredentials
+    {
+        public string UserName{get;set;}
+        public string Password{get;set;}
+        public string OrgId{get;set;}
     }
 }

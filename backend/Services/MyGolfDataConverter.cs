@@ -28,7 +28,7 @@ public class MyGolfDataConverter
 
         //for now it looks like this
         //<Gender xsi:type="xsd:unsignedByte">1</Gender>
-        var match = Regex.Match(gitUserData, @"(\d)<\/Gender>");
+        var match = Regex.Match(gitUserData ?? string.Empty, @"(\d)<\/Gender>");
         if (!match.Success){
             telemetry.TrackException(new Exception("Unable to parse gender"));
             return userInfo;

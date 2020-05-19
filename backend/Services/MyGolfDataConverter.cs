@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Dynamic;
 using System.Globalization;
 using System.Text.RegularExpressions;
@@ -13,14 +14,25 @@ public class MyGolfDataConverter
     {
         this.telemetry = telemetry;
     }
-    public Data ConvertToData(string myHCPPageData, string gitUserData,string obfustatedGid)
+    public Data ConvertToData(string myHCPPageData, string gitUserData, string obfustatedGid)
     {
-        var user = GetUserInfo(gitUserData);
-        user.ObfuscatedGid=obfustatedGid;
-        return new Data{
-            Hcp=GetPlayerRounds(myHCPPageData),
-            User=user
-        };
+        var data = new Data();
+        try
+        {
+            data.User= GetUserInfo(gitUserData);
+            data.User.ObfuscatedGid = obfustatedGid;
+            data.Hcp=GetPlayerRounds(myHCPPageData);
+        }
+        catch (Exception ex)
+        {
+            telemetry.TrackException(ex,
+            new Dictionary<string, string> {
+                {nameof(myHCPPageData),myHCPPageData}
+                ,{nameof(gitUserData),gitUserData}
+                });
+            throw;
+        }
+        return data;
     }
     private UserInfo GetUserInfo(string gitUserData)
     {
@@ -29,11 +41,12 @@ public class MyGolfDataConverter
         //for now it looks like this
         //<Gender xsi:type="xsd:unsignedByte">1</Gender>
         var match = Regex.Match(gitUserData ?? string.Empty, @"(\d)<\/Gender>");
-        if (!match.Success){
+        if (!match.Success)
+        {
             telemetry.TrackException(new Exception("Unable to parse gender"));
             return userInfo;
         }
-        userInfo.Gender=match.Groups[1].Value=="1"?Sex.Male:Sex.Female;
+        userInfo.Gender = match.Groups[1].Value == "1" ? Sex.Male : Sex.Female;
         return userInfo;
     }
     private Hcp GetPlayerRounds(string myHCPPageData)
@@ -41,8 +54,7 @@ public class MyGolfDataConverter
         var match = Regex.Match(myHCPPageData, @"var\s*hcpRounds\s=\s({.*?});");
         if (!match.Success)
         {
-            telemetry.TrackException(new Exception("Unable to parse rounds"));
-            return null;
+            throw new Exception("Unable to parseRounds, format error");
         }
         dynamic data = Newtonsoft.Json.JsonConvert.DeserializeObject<ExpandoObject>(match.Groups[1].Value);
         var result = new Hcp();

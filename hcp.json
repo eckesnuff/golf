@@ -1,0 +1,3390 @@
+{
+    "DataOffset": 25,
+    "Items": [
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 74,
+            "HCPResult": {
+                "Text": "5,3",
+                "Value": 5.307575757575758
+            },
+            "HCPResultAdjusted": {
+                "Text": "5,3",
+                "Value": 5.307575757575758
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 2,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 16,
+                    "Number": 3,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 8,
+                    "Number": 4,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 2,
+                    "Index": 18,
+                    "Number": 8,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 2
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 9,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 2,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 2
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 11,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 3,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 2,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 2
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Mikael Johansson",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 36,
+            "RoundDate": "20200920T150500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Ekerum Golfklubb",
+            "CourseName": "Långe Erik ",
+            "GrossAdjusted": 86,
+            "HCPResult": {
+                "Text": "15,4",
+                "Value": 15.375409836065574
+            },
+            "HCPResultAdjusted": {
+                "Text": "15,4",
+                "Value": 15.375409836065574
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 5,
+                    "Index": 7,
+                    "Number": 1,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 15,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 3,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 13,
+                    "Number": 4,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 5,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 17,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 1,
+                    "Number": 8,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 9,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 4,
+                    "Number": 10,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 12,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 14,
+                    "Number": 12,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 18,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 2,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 10,
+                    "Number": 15,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 17,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 8,
+                    "Number": 18,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 25,
+            "RoundDate": "20200913T112600",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Ekerum Golfklubb",
+            "CourseName": "Långe Jan",
+            "GrossAdjusted": 86,
+            "HCPResult": {
+                "Text": "10,4",
+                "Value": 10.365413533834587
+            },
+            "HCPResultAdjusted": {
+                "Text": "10,4",
+                "Value": 10.365413533834587
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 6,
+                    "Index": 5,
+                    "Number": 1,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 3,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 11,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 8,
+                    "Index": 3,
+                    "Number": 5,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 8
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 13,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 1,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 8,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 17,
+                    "Number": 9,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 18,
+                    "Number": 11,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 12,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 15,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 6,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 18,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 30,
+            "RoundDate": "20200912T130200",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 77,
+            "HCPResult": {
+                "Text": "4,2",
+                "Value": 4.217605633802817
+            },
+            "HCPResultAdjusted": {
+                "Text": "4,2",
+                "Value": 4.217605633802817
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Mikael Johansson",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 38,
+            "RoundDate": "20200830T151000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 77,
+            "HCPResult": {
+                "Text": "4,2",
+                "Value": 4.217605633802817
+            },
+            "HCPResultAdjusted": {
+                "Text": "4,2",
+                "Value": 4.217605633802817
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 4,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 2,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 2
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 39,
+            "RoundDate": "20200823T162000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 80,
+            "HCPResult": {
+                "Text": "6,6",
+                "Value": 6.604929577464789
+            },
+            "HCPResultAdjusted": {
+                "Text": "6,6",
+                "Value": 6.604929577464789
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 8,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 8
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Niklas Jägerklou",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 36,
+            "RoundDate": "20200821T130000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 82,
+            "HCPResult": {
+                "Text": "12,2",
+                "Value": 12.156060606060606
+            },
+            "HCPResultAdjusted": {
+                "Text": "12,2",
+                "Value": 12.156060606060606
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 2,
+                    "Index": 12,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 2
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 4,
+                    "Number": 2,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 16,
+                    "Number": 3,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 8,
+                    "Number": 4,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 6,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 18,
+                    "Number": 8,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 9,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 11,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 5,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 17,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 3,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 30,
+            "RoundDate": "20200809T091500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 88,
+            "HCPResult": {
+                "Text": "11,5",
+                "Value": 11.533793103448275
+            },
+            "HCPResultAdjusted": {
+                "Text": "11,5",
+                "Value": 11.533793103448275
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Kalmar Golfklubb",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 29,
+            "RoundDate": "20200808T080000",
+            "RoundNumber": 0,
+            "Type": 2
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "12,2",
+                "Value": 12.156060606060606
+            },
+            "HCPResultAdjusted": {
+                "Text": "12,2",
+                "Value": 12.156060606060606
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Anna-Carin Hammarström",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 28,
+            "RoundDate": "20200802T115500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "PGA Sweden National",
+            "CourseName": "2. Lakes Course",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "12,5",
+                "Value": 12.528260869565218
+            },
+            "HCPResultAdjusted": {
+                "Text": "12,5",
+                "Value": 12.528260869565218
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Andreas Stening",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 27,
+            "RoundDate": "20200728T073000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 80,
+            "HCPResult": {
+                "Text": "10,4",
+                "Value": 10.443939393939393
+            },
+            "HCPResultAdjusted": {
+                "Text": "10,4",
+                "Value": 10.443939393939393
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 5,
+                    "Index": 12,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 2,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 16,
+                    "Number": 3,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 4,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 18,
+                    "Number": 8,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 9,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 13,
+                    "Number": 11,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 17,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Kalmar Golfklubb",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 30,
+            "RoundDate": "20200709T070000",
+            "RoundNumber": 0,
+            "Type": 2
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 75,
+            "HCPResult": {
+                "Text": "2,6",
+                "Value": 2.626056338028169
+            },
+            "HCPResultAdjusted": {
+                "Text": "2,6",
+                "Value": 2.626056338028169
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Andreas Stening",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 39,
+            "RoundDate": "20200628T155000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 85,
+            "HCPResult": {
+                "Text": "10,6",
+                "Value": 10.583802816901407
+            },
+            "HCPResultAdjusted": {
+                "Text": "10,6",
+                "Value": 10.583802816901407
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 11
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Söderholm",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 29,
+            "RoundDate": "20200621T163000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 80,
+            "HCPResult": {
+                "Text": "6,6",
+                "Value": 6.604929577464789
+            },
+            "HCPResultAdjusted": {
+                "Text": "6,6",
+                "Value": 6.604929577464789
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Andreas Stening",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 34,
+            "RoundDate": "20200618T183000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 81,
+            "HCPResult": {
+                "Text": "7,4",
+                "Value": 7.400704225352113
+            },
+            "HCPResultAdjusted": {
+                "Text": "7,4",
+                "Value": 7.400704225352113
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 3,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 9
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 33,
+            "RoundDate": "20200614T170000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 82,
+            "HCPResult": {
+                "Text": "8,2",
+                "Value": 8.196478873239435
+            },
+            "HCPResultAdjusted": {
+                "Text": "8,2",
+                "Value": 8.196478873239435
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": true,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 32,
+            "RoundDate": "20200607T074000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 90,
+            "HCPResult": {
+                "Text": "13,1",
+                "Value": 13.092413793103447
+            },
+            "HCPResultAdjusted": {
+                "Text": "13,1",
+                "Value": 13.092413793103447
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 4,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 9
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 8
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Andreas Stening",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 26,
+            "RoundDate": "20200531T170000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 85,
+            "HCPResult": {
+                "Text": "12,9",
+                "Value": 12.89037037037037
+            },
+            "HCPResultAdjusted": {
+                "Text": "12,9",
+                "Value": 12.89037037037037
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 12,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 4,
+                    "Number": 2,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 16,
+                    "Number": 3,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 4,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 14,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 18,
+                    "Number": 8,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 7,
+                    "Index": 10,
+                    "Number": 9,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 7
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 13,
+                    "Number": 11,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 5,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 3,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Mikael Johansson",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 27,
+            "RoundDate": "20200528T175500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "9,0",
+                "Value": 8.992253521126761
+            },
+            "HCPResultAdjusted": {
+                "Text": "9,0",
+                "Value": 8.992253521126761
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 31,
+            "RoundDate": "20200524T172000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 80,
+            "HCPResult": {
+                "Text": "8,7",
+                "Value": 8.705185185185185
+            },
+            "HCPResultAdjusted": {
+                "Text": "8,7",
+                "Value": 8.705185185185185
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 2,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 16,
+                    "Number": 3,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 8,
+                    "Number": 4,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 14,
+                    "Number": 6,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 6,
+                    "Number": 7,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 8,
+                    "Par": 3,
+                    "Points": 0,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 10,
+                    "Number": 9,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 13,
+                    "Number": 11,
+                    "Par": 5,
+                    "Points": 1,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 5,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 13,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 1,
+                    "Number": 14,
+                    "Par": 4,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 3,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Mikael Johansson",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 31,
+            "RoundDate": "20200517T180500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 76,
+            "HCPResult": {
+                "Text": "3,4",
+                "Value": 3.421830985915493
+            },
+            "HCPResultAdjusted": {
+                "Text": "3,4",
+                "Value": 3.421830985915493
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 3,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 38,
+            "RoundDate": "20200510T082000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Västerviks Golfklubb",
+            "CourseName": "Ekhagens 18-hålsbana",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "10,9",
+                "Value": 10.944094488188975
+            },
+            "HCPResultAdjusted": {
+                "Text": "10,9",
+                "Value": 10.944094488188975
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Idakarolina Håkansson",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 29,
+            "RoundDate": "20200502T110700",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Gamla Banan",
+            "GrossAdjusted": 83,
+            "HCPResult": {
+                "Text": "9,0",
+                "Value": 8.992253521126761
+            },
+            "HCPResultAdjusted": {
+                "Text": "9,0",
+                "Value": 8.992253521126761
+            },
+            "HoleScores": [
+                {
+                    "AdjustedGross": 4,
+                    "Index": 10,
+                    "Number": 1,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 6,
+                    "Number": 2,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 8,
+                    "Number": 3,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 14,
+                    "Number": 4,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 2,
+                    "Number": 5,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 16,
+                    "Number": 6,
+                    "Par": 3,
+                    "Points": 1,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 18,
+                    "Number": 7,
+                    "Par": 5,
+                    "Points": 2,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 4,
+                    "Number": 8,
+                    "Par": 5,
+                    "Points": 4,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 12,
+                    "Number": 9,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 5,
+                    "Index": 9,
+                    "Number": 10,
+                    "Par": 4,
+                    "Points": 1,
+                    "Strokes": 5
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 17,
+                    "Number": 11,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 8,
+                    "Index": 3,
+                    "Number": 12,
+                    "Par": 5,
+                    "Points": 0,
+                    "Strokes": 10
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 1,
+                    "Number": 13,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 13,
+                    "Number": 14,
+                    "Par": 5,
+                    "Points": 4,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 6,
+                    "Index": 7,
+                    "Number": 15,
+                    "Par": 4,
+                    "Points": 0,
+                    "Strokes": 6
+                },
+                {
+                    "AdjustedGross": 3,
+                    "Index": 15,
+                    "Number": 16,
+                    "Par": 3,
+                    "Points": 2,
+                    "Strokes": 3
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 5,
+                    "Number": 17,
+                    "Par": 4,
+                    "Points": 3,
+                    "Strokes": 4
+                },
+                {
+                    "AdjustedGross": 4,
+                    "Index": 11,
+                    "Number": 18,
+                    "Par": 4,
+                    "Points": 2,
+                    "Strokes": 4
+                }
+            ],
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Fredrik Bolin",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 30,
+            "RoundDate": "20200426T074000",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kalmar Golfklubb",
+            "CourseName": "Nya Banan",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "10,4",
+                "Value": 10.443939393939393
+            },
+            "HCPResultAdjusted": {
+                "Text": "10,4",
+                "Value": 10.443939393939393
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Andreas Stening",
+            "PCC": 0,
+            "PlayedHoles": 18,
+            "Points": 29,
+            "RoundDate": "20200419T084500",
+            "RoundNumber": 0,
+            "Type": 1
+        },
+        {
+            "Adjustment": null,
+            "Adjustments": null,
+            "ClubName": "Kristianstads Golfklubb i Åhus",
+            "CourseName": "Åhus Östra ",
+            "GrossAdjusted": 0,
+            "HCPResult": {
+                "Text": "7,1",
+                "Value": 7.073282442748091
+            },
+            "HCPResultAdjusted": {
+                "Text": "7,1",
+                "Value": 7.073282442748091
+            },
+            "HoleScores": null,
+            "IsCalculated": true,
+            "IsCounting": false,
+            "MarkerName": "Andreas Stening",
+            "PCC": 1,
+            "PlayedHoles": 18,
+            "Points": 32,
+            "RoundDate": "20200411T142000",
+            "RoundNumber": 0,
+            "Type": 1
+        }
+    ],
+    "NumberOfCountingRounds": 8,
+    "SearchEndDate": null,
+    "SearchStartDate": null,
+    "ShowUncalculatedRoundsMessage": false,
+    "TotalItems": 50
+}

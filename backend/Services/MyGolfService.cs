@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using backend.Models;
 using System;
 using Microsoft.ApplicationInsights;
+using System.Collections.Generic;
 
 namespace backend.Services
 {
@@ -59,7 +60,7 @@ namespace backend.Services
                 return Result.Error(ex.Message);
             }
         }
-        public async Task<Result<string>> GetMyGolfRawData()
+        public async Task<Result<string[]>> GetMyGolfRawData()
         {
             try
             {
@@ -67,14 +68,34 @@ namespace backend.Services
                 request.CookieContainer = _cookieContainer;
                 var wr = (HttpWebResponse)await request.GetResponseAsync();
                 if (wr.StatusCode != HttpStatusCode.OK)
-                    return Result.Error($"Kunde inte ansluta till hcp sida: {wr.StatusDescription}").WithData<string>(null);
+                    return Result.Error($"Kunde inte ansluta till hcp sida: {wr.StatusDescription}").WithData<string[]>(null);
                 var reader = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.UTF8);
-                return Result.OK().WithData(reader.ReadToEnd());
+                var results = new List<string>();
+                results.Add(reader.ReadToEnd());
+                await foreach (var result in GetAdditionalJsonData()){
+                    results.Add(result);
+                }
+
+                return Result.OK().WithData(results.ToArray());
+
             }
             catch (Exception ex)
             {
                 telemetry.TrackException(ex);
-                return Result.Error(ex.Message).WithData<string>(null);
+                return Result.Error(ex.Message).WithData<string[]>(null);
+            }
+        }
+        private async IAsyncEnumerable<string> GetAdditionalJsonData(){
+            for(int i = 1; i <=4;i++){
+                var request = (HttpWebRequest)WebRequest.Create($"https://mingolf.golf.se/Site/HCP?handler=RoundItems&max=25&offset={i*25}");
+                request.CookieContainer = _cookieContainer;
+                request.ContentType="application/x-www-form-urlencoded";
+                request.Method="POST";
+                var wr = (HttpWebResponse) await request.GetResponseAsync();
+                if (wr.StatusCode != HttpStatusCode.OK)
+                    break;
+                var reader = new StreamReader(wr.GetResponseStream(), System.Text.Encoding.UTF8);
+                yield return reader.ReadToEnd();
             }
         }
         public async Task<Result<string>> GetGolfMatrikel(string golfId){

@@ -20,12 +20,12 @@ namespace backend.Controllers
     {
         private readonly MyGolfService myGolfService;
         private readonly TelemetryClient telemetry;
-        private readonly IHostingEnvironment env;
+        private readonly IWebHostEnvironment env;
         private readonly Persistence persistence;
         private readonly IConfiguration configuration;
         private readonly MyGolfDataConverter dataConverter;
 
-        public HcpBoardController(TelemetryClient telemetry, IHostingEnvironment env, Persistence persistence, IConfiguration configuration,MyGolfService myGolfService)
+        public HcpBoardController(TelemetryClient telemetry, IWebHostEnvironment env, Persistence persistence, IConfiguration configuration,MyGolfService myGolfService)
         {
             this.myGolfService = myGolfService;
             this.telemetry = telemetry;

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace backend
 {
@@ -26,10 +27,6 @@ namespace backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1).ConfigureApiBehaviorOptions(x =>
-            {
-                x.SuppressModelStateInvalidFilter = true;
-            });
             services.AddApplicationInsightsTelemetry();
             services.AddSingleton<Persistence>((s) =>{
                 return new Persistence(
@@ -47,11 +44,13 @@ namespace backend
             services.AddSingleton<MyGolfService>();
             
             services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
+            services.AddControllersWithViews().AddNewtonsoftJson();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -61,15 +60,11 @@ namespace backend
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            //app.use
-            //             app.UseEndpoints(endpoints =>
-            // {
-            //     endpoints.MapControllerRoute(
-            //         name: "default",
-            //         pattern: "{controller=Home}/{action=Index}/{id?}");
-            // });
             app.UseHttpsRedirection();
-            app.UseMvcWithDefaultRoute();
+            app.UseRouting();
+            app.UseEndpoints(x=>x.MapControllerRoute(name: "default",
+         pattern: "{controller=Home}/{action=Index}/{id?}"));
+            //app.UseMvcWithDefaultRoute();
         }
     }
     public class CustomTelemetryInitializer : TelemetryInitializerBase {

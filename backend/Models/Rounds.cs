@@ -32,6 +32,7 @@ public class Hcp
     public List<Round> Rounds = new List<Round>();
     [JsonProperty("nUncalculatedScores")]
     public int UncalculatedScores { get; set; }
+    public Dictionary<string,Dictionary<int,HoleStats>> CourseStats{get;set;}
 }
 
 public class Round

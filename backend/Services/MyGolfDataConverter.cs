@@ -6,6 +6,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using Microsoft.ApplicationInsights;
 using static UserInfo;
+using Newtonsoft.Json;
 
 public class MyGolfDataConverter
 {
@@ -129,8 +130,11 @@ public class MyGolfDataConverter
 }
 public class HoleStats
 {
+    [JsonProperty("number")]
     public int Number { get; set; }
+    [JsonProperty("par")]
     public int Par { get; set; }
+    [JsonProperty("scores")]    
     public List<int> Scores { get; set; } = new List<int>();
     public HoleStats(int number, int par)
     {
@@ -141,7 +145,10 @@ public class HoleStats
     {
         Scores.Add(grossAdjusted);
     }
+    [JsonProperty("average")]
     public double Average => Scores.Average();
+    [JsonProperty("high")]    
     public int High => Scores.Max();
+    [JsonProperty("low")]
     public int Low => Scores.Min();
 }

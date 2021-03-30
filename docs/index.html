@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="sv-SE">
 
 <head>
@@ -135,6 +135,10 @@ tr {padding: 1em;}
 th,td {text-align: left;padding: 1em;}
 td span.pcc{float:right;}
 .summary {display: none;padding-bottom: 1em; text-align: center;}
+.summary .stats {
+    margin: 1em auto;
+    overflow: hidden;
+}
 .loaded .summary {display: block;}
 #message{
     position: fixed;
@@ -199,7 +203,8 @@ tr.old {
             hcp: {
                 rounds:[],
                 uncalculatedScores:0,
-                calculatedHcp:0
+                calculatedHcp: 0,
+                stats:[]
             },
             user: {
                 gender:1
@@ -231,8 +236,8 @@ tr.old {
                 document.querySelector(".add.toggle").classList.add('hidden');
             });
             document.querySelectorAll(".tools input").forEach((e)=>{
-                e.addEventListener("click",(btn)=>{
-                    let active = document.getElementById(btn.currentTarget.dataset.toggle)
+                e.addEventListener("click",(btn)=> {
+                    let active = document.getElementById(btn.currentTarget.dataset.toggle);
                     document.querySelectorAll(".toggle").forEach(panel=>{
                         if(panel!=active){
                             panel.classList.add("hidden");
@@ -245,6 +250,11 @@ tr.old {
                     
                 });
             });
+            document.querySelector(".summary .hcp").addEventListener("click",
+                (e) => {
+                    document.querySelector(".summary .stats").classList.toggle('hidden');
+                });
+                    
             if(simulate){
                 loadBoard({});
             }
@@ -277,6 +287,14 @@ tr.old {
             for(let opt of document.getElementById("course").options){
                 opt.innerHTML = `${opt.dataset.name} (${calcPlayHcp(opt.dataset.slope,opt.dataset.cr,opt.dataset.par)})`;
             }
+            let stats = document.querySelector(".summary .stats");
+            let statsHtml = "";
+            Object.keys(playerData.hcp.stats).forEach((key) => {
+                var year = playerData.hcp.stats[key];
+                statsHtml += `<div>${key}: avg: ${year.avg.gRound()} med: ${year.median.gRound()}</div>`;
+            });
+            stats.innerHTML = statsHtml;
+
         }
         const filterCourseOptions = () => {
             let courseSelect=document.getElementById("course");
@@ -389,9 +407,9 @@ tr.old {
         };
         const calcHcp = () => {
             let rounds = playerData.hcp.rounds;
-            let top = rounds.slice(0, 20).sort(function (a, b) {
+            let top = rounds.slice(0, 20).sort(function(a, b) {
                 return a.hcp - b.hcp;
-            })
+            });
             var calcCondition = getHcpCondition(top.length);
 
             top = top.slice(0, calcCondition.topCount);
@@ -401,8 +419,35 @@ tr.old {
             }, 0) / top.length + calcCondition.seed;
             rounds.forEach(e => {
                 e.top8 = top.some(tRound => tRound == e);
-            })
+            });
+
+
+            const yearsDic = [];
+            rounds.forEach(round => {
+                let year = round.date.substring(0, 4);
+                if (!yearsDic[year]) {
+                    yearsDic[year] = [];
+                }
+                yearsDic[year].push(round.hcp);
+            });
+
+            Object.keys(yearsDic).forEach((key) => {
+                const year = yearsDic[key];
+                year.avg = year.reduce((a, b) => a + b, 0) / year.length;
+                year.median = median(year);
+            });
+            playerData.hcp.stats = yearsDic;
+
         };
+        const median = (numbers) => {
+            const sorted = numbers.slice().sort((a, b) => a - b);
+            const middle = Math.floor(sorted.length / 2);
+
+            if (sorted.length % 2 === 0) {
+                return (sorted[middle - 1] + sorted[middle]) / 2;
+            }
+            return sorted[middle];
+        }
         const storeRounds = ()=> {
             window.localStorage.setItem("player", JSON.stringify(playerData))
         };
@@ -520,6 +565,7 @@ tr.old {
         </form>
         <div class="summary">
             <span class="hcp">HCP: <span></span></span>
+            <div class="stats hidden"></div>
             <table>
                 <thead>
                     <tr>

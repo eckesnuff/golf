@@ -189,11 +189,67 @@ tr.old {
     form #score,form #golfId,form #password{width:100%}
     input[type="submit"]{margin-top: 1em;}
 }
+.chat-btn {
+    display: none;
+    clear: both;
+    width: 100% !important;
+    margin-top: 0.5em;
+    float: none !important;
+    background-color: rgba(0,66,8,0.46) !important;
+}
+.has-session .chat-btn { display: block; }
+.chat-messages {
+    min-height: 150px;
+    max-height: 55vh;
+    overflow-y: auto;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75em;
+}
+.chat-msg {
+    padding: 0.75em 1em;
+    border-radius: 5px;
+    max-width: 88%;
+    line-height: 1.6;
+}
+.chat-msg.user {
+    background: rgba(0,0,0,0.35);
+    margin-left: auto;
+}
+.chat-msg.assistant { background: rgba(0,66,8,0.35); }
+.chat-msg.loading { opacity: 0.5; letter-spacing: 0.2em; }
+.chat-msg.assistant h1,.chat-msg.assistant h2,.chat-msg.assistant h3 { margin: 0.4em 0 0.2em; font-size: 1.05em; }
+.chat-msg.assistant p { margin: 0.4em 0; }
+.chat-msg.assistant ul,.chat-msg.assistant ol { margin: 0.4em 0; padding-left: 1.4em; }
+.chat-msg.assistant code { background: rgba(0,0,0,0.3); padding: 1px 4px; border-radius: 3px; font-size: 0.9em; }
+.chat-msg.assistant pre { background: rgba(0,0,0,0.3); padding: 0.75em; border-radius: 4px; overflow-x: auto; }
+.chat-msg.assistant pre code { background: none; padding: 0; }
+#chatForm {
+    display: flex;
+    gap: 0.5em;
+    padding: 0.75em 1em;
+    border: none !important;
+    max-width: none !important;
+    margin: 0 !important;
+    border-top: 1px solid rgba(0,0,0,0.3) !important;
+}
+#chatForm input[type=text] {
+    flex: 1;
+    width: auto !important;
+    margin: 0 !important;
+    padding: 0.75em;
+}
+#chatForm input[type=submit] {
+    width: auto !important;
+    padding: 0.75em 1.25em;
+}
     </style>
     <script>
         Number.prototype.gRound= function(){return Math.round(Number(this)*10)/10};
         Number.prototype.toGString= function(){return this.gRound().toFixed(1).replace("-","+")};
         let simulate=false;
+        let sessionToken=null;
         let courses=[];
         let summaryView;
         document.addEventListener("DOMContentLoaded", function () {
@@ -255,6 +311,10 @@ tr.old {
                     document.querySelector(".summary .stats").classList.toggle('hidden');
                 });
                     
+            document.getElementById("chatForm").addEventListener("submit", (e) => {
+                e.preventDefault();
+                sendChat();
+            });
             if(simulate){
                 loadBoard({});
             }
@@ -359,6 +419,10 @@ tr.old {
                     printMessage("Alla registrerade rundor laddade",false,true);
                 }
                 document.querySelector(".login.toggle").classList.add('hidden');
+                if(result.sessionToken){
+                    sessionToken=result.sessionToken;
+                    document.body.classList.add("has-session");
+                }
             }
             catch (e) {
                 printMessage("Något fel inträffade... Kontakta ansvarig", true,false);
@@ -481,6 +545,57 @@ tr.old {
                 },error?3000:2000);
             }
         };
+        const appendChatMessage = (role, content, isLoading=false) => {
+            const messages = document.getElementById("chatMessages");
+            const div = document.createElement("div");
+            div.className = `chat-msg ${role}`;
+            if(isLoading){
+                div.className += " loading";
+                div.textContent = "●  ●  ●";
+            } else if(role==="assistant"){
+                div.innerHTML = marked.parse(content);
+            } else {
+                div.textContent = content;
+            }
+            messages.appendChild(div);
+            messages.scrollTop = messages.scrollHeight;
+            return div;
+        };
+        const sendChat = async () => {
+            const input = document.getElementById("chatInput");
+            const message = input.value.trim();
+            if(!message || !sessionToken) return;
+            input.value = "";
+            appendChatMessage("user", message);
+            const submitBtn = document.querySelector("#chatForm input[type=submit]");
+            submitBtn.disabled = true;
+            const loader = appendChatMessage("assistant","",true);
+            try {
+                const response = await fetch("https://api.golf.vilford.com/api/query", {
+                    method: "POST",
+                    headers: {"Accept":"application/json","Content-Type":"application/json;charset=UTF-8"},
+                    body: JSON.stringify({sessionToken, message})
+                });
+                const result = await response.json();
+                loader.remove();
+                if(result.success){
+                    appendChatMessage("assistant", result.data);
+                } else if(response.status===401){
+                    appendChatMessage("assistant","Sessionen har gått ut, logga in igen.");
+                    sessionToken=null;
+                    document.body.classList.remove("has-session");
+                } else {
+                    appendChatMessage("assistant","Fel: "+(result.message||"Okänt fel"));
+                }
+            } catch(e){
+                loader.remove();
+                appendChatMessage("assistant","Något gick fel, försök igen.");
+                console.error(e);
+            } finally {
+                submitBtn.disabled = false;
+                input.focus();
+            }
+        };
    var sdkInstance="appInsightsSDK";window[sdkInstance]="appInsights";var aiName=window[sdkInstance],aisdk=window[aiName]||function(e){function n(e){t[e]=function(){var n=arguments;t.queue.push(function(){t[e].apply(t,n)})}}var t={config:e};t.initialize=!0;var i=document,a=window;setTimeout(function(){var n=i.createElement("script");n.src=e.url||"https://az416426.vo.msecnd.net/scripts/b/ai.2.min.js",i.getElementsByTagName("script")[0].parentNode.appendChild(n)});try{t.cookie=i.cookie}catch(e){}t.queue=[],t.version=2;for(var r=["Event","PageView","Exception","Trace","DependencyData","Metric","PageViewPerformance"];r.length;)n("track"+r.pop());n("startTrackPage"),n("stopTrackPage");var s="Track"+r[0];if(n("start"+s),n("stop"+s),n("setAuthenticatedUserContext"),n("clearAuthenticatedUserContext"),n("flush"),!(!0===e.disableExceptionTracking||e.extensionConfig&&e.extensionConfig.ApplicationInsightsAnalytics&&!0===e.extensionConfig.ApplicationInsightsAnalytics.disableExceptionTracking)){n("_"+(r="onerror"));var o=a[r];a[r]=function(e,n,i,a,s){var c=o&&o(e,n,i,a,s);return!0!==c&&t["_"+r]({message:e,url:n,lineNumber:i,columnNumber:a,error:s}),c},e.autoExceptionInstrumented=!0}return t}(
    {
       instrumentationKey:"7bf9c1f7-b668-4b9d-87ab-5b462a68d440",
@@ -490,12 +605,14 @@ tr.old {
    }
    );window[aiName]=aisdk,aisdk.queue&&0===aisdk.queue.length&&aisdk.trackPageView({});
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     </head>
     <body>
         <div id="message"></div>
         <div class="tools">
             <input type="button" value="Hämta rundor" data-toggle="login" />
             <input type="button" value="Lägg till" data-toggle="add"/>
+            <input type="button" class="chat-btn" value="Golf AI" data-toggle="chat" />
         </div>
         <div class="content panel">
             <div class="intro toggle">
@@ -571,6 +688,13 @@ tr.old {
                 <input type="submit" class="button" id="parseBoard" value="Läs in från min golf" />
             </fieldset>
         </form>
+        <div class="chat toggle hidden" id="chat">
+            <div id="chatMessages" class="chat-messages"></div>
+            <form id="chatForm">
+                <input type="text" id="chatInput" placeholder="Ställ en fråga om dina rundor..." autocomplete="off" />
+                <input type="submit" class="button" value="Skicka" />
+            </form>
+        </div>
         <div class="summary">
             <span class="hcp">HCP: <span></span></span>
             <div class="stats hidden"></div>

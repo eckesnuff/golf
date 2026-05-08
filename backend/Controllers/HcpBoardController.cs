@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
@@ -38,11 +41,11 @@ namespace backend.Controllers
         [HttpGet]
         public async Task<ActionResult<Result>> Get(string userHash)
         {
-            var result= await persistence.GetGolferAsync(userHash);
-            if(result==null){
+            var result = await persistence.GetGolferV2Async(userHash);
+            if (result == null)
                 return NotFound();
-            }
-            return Result.OK().WithData(result.Data);
+            var data = dataConverter.ConvertFromRawScores(result.Scores, result.Gender, result.ObfuscatedGid);
+            return Result.OK().WithData(data);
         }
 
         // POST api/hcpboard
@@ -57,46 +60,68 @@ namespace backend.Controllers
             telemetry.TrackEvent("user", new Dictionary<string, string>{
                 {"id",obfuscatedGid}});
 
-            var result = await myGolfService.Login(creds);
-            if (!result.Success)
+            var loginResult = await myGolfService.Login(creds);
+            if (!loginResult.Success)
             {
-                return Unauthorized(result);
+                return Unauthorized(loginResult);
             }
             var hash=GenerateUniqueId(creds.UserName);
             this.HttpContext.User= new GenericPrincipal(new GenericIdentity(hash),new string[]{"golfer"});
 
-            var persistantTask = persistence.GetGolferAsync(hash);
-            var myGolfDataTask = myGolfService.GetMyGolfRawData();
-            var gitTask = myGolfService.GetGolfMatrikel(creds.UserName);
-            await Task.WhenAll(persistantTask, myGolfDataTask,gitTask);
-            GolferDoc doc = null;
-            if (persistantTask.IsCompletedSuccessfully)
+            var existingDoc = await persistence.GetGolferV2Async(hash);
+            var latestKnownDate = existingDoc?.Scores?.Count > 0
+                ? existingDoc.Scores.Max(s => ((DateTime)s["date"]).ToString("yyyy-MM-dd HH:mm"))
+                : null;
+            var myGolfData = await myGolfService.GetMyGolfRawData(latestKnownDate);
+
+            if (myGolfData.Success)
             {
-                doc = persistantTask.Result;
-            }
-            if (myGolfDataTask.Result.Success)
-            {
-                var convertedResult = dataConverter.ConvertToData(myGolfDataTask.Result.Data,gitTask.Result.Data ,obfuscatedGid);
-                if (convertedResult.IsValid())
+                var fetchedScores = new JArray();
+                var fetchedIds = new HashSet<string>();
+                foreach (var pageJson in myGolfData.Data)
                 {
-                    await persistence.SaveGolferAsync(new GolferDoc
+                    dynamic page = JsonConvert.DeserializeObject(pageJson);
+                    if (page.scores == null) continue;
+                    foreach (var score in page.scores)
                     {
-                        Modified = DateTime.UtcNow,
-                        Data = convertedResult,
-                        Id = hash
-                    });
-                    return Result.OK().WithData(convertedResult);
+                        fetchedIds.Add((string)score.id);
+                        fetchedScores.Add(score);
+                    }
                 }
-                else
-                {
+
+                // fetched scores win; keep existing only for ids not covered by the fetch
+                var mergedScores = new JArray();
+                foreach (var s in fetchedScores) mergedScores.Add(s);
+                if (existingDoc?.Scores != null)
+                    foreach (var s in existingDoc.Scores)
+                    {
+                        if (!fetchedIds.Contains((string)s["id"]))
+                            mergedScores.Add(s);
+                    }
+
+                if (mergedScores.Count == 0)
                     return Result.Error("Kunde inte parsa rundor");
-                }
+
+                var gender = dataConverter.GetGenderFromToken(loginResult.Data);
+                await persistence.SaveGolferV2Async(new GolferDocV2
+                {
+                    Id = hash,
+                    Modified = DateTime.UtcNow,
+                    Gender = gender,
+                    ObfuscatedGid = obfuscatedGid,
+                    Scores = mergedScores
+                });
+                var convertedResult = dataConverter.ConvertFromRawScores(mergedScores, gender, obfuscatedGid);
+                if (!convertedResult.IsValid())
+                    return Result.Error("Kunde inte parsa rundor");
+                return Result.OK().WithData(convertedResult);
             }
-            else if (doc != null)
+            else if (existingDoc != null)
             {
-                return Result.OK($"Kunde inte hämta från min golf, Rundorna är från {doc.Modified.ToString("d")}").WithData(doc.Data);
+                var fallback = dataConverter.ConvertFromRawScores(existingDoc.Scores, existingDoc.Gender, existingDoc.ObfuscatedGid);
+                return Result.OK($"Kunde inte hämta från min golf, Rundorna är från {existingDoc.Modified.ToString("d")}").WithData(fallback);
             }
-            return myGolfDataTask.Result;
+            return myGolfData;
 
         }
 

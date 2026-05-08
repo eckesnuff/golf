@@ -189,15 +189,14 @@ tr.old {
     form #score,form #golfId,form #password{width:100%}
     input[type="submit"]{margin-top: 1em;}
 }
-.chat-btn {
+.tools input.chat-btn {
     display: none;
     clear: both;
-    width: 100% !important;
+    width: 100%;
     margin-top: 0.5em;
-    float: none !important;
-    background-color: rgba(0,66,8,0.46) !important;
+    float: none;
 }
-.has-session .chat-btn { display: block; }
+.has-session .tools input.chat-btn { display: block; }
 .chat-messages {
     min-height: 150px;
     max-height: 55vh;
@@ -229,19 +228,19 @@ tr.old {
     display: flex;
     gap: 0.5em;
     padding: 0.75em 1em;
-    border: none !important;
-    max-width: none !important;
-    margin: 0 !important;
-    border-top: 1px solid rgba(0,0,0,0.3) !important;
+    border: none;
+    max-width: none;
+    margin: 0;
+    border-top: 1px solid rgba(0,0,0,0.3);
 }
 #chatForm input[type=text] {
     flex: 1;
-    width: auto !important;
-    margin: 0 !important;
+    width: auto;
+    margin: 0;
     padding: 0.75em;
 }
 #chatForm input[type=submit] {
-    width: auto !important;
+    width: auto;
     padding: 0.75em 1.25em;
 }
     </style>
@@ -271,10 +270,15 @@ tr.old {
             simulate=location.hash&&location.hash.length>5;
             courses = [...document.getElementById("course").options];
             summaryView = document.querySelector(".summary");
+            const savedGolfId = window.localStorage.getItem("golfId");
+            if(savedGolfId) document.getElementById("golfId").value = savedGolfId;
+
             document.getElementById("login").addEventListener("submit", (e) => {
                 e.preventDefault();
+                const golfId = document.getElementById("golfId").value;
+                window.localStorage.setItem("golfId", golfId);
                 const user = {
-                    "UserName": document.getElementById("golfId").value,
+                    "UserName": golfId,
                     "Password": document.getElementById("password").value
                 };
                 let button = e.currentTarget.querySelector('input[type=submit]');

@@ -16,6 +16,8 @@ builder.Services.AddSingleton<Persistence>(_ => new Persistence(
     new Uri(builder.Configuration["CosmosDB:URL"]),
     builder.Configuration["CosmosDB:PrimaryKey"]));
 builder.Services.AddSingleton<MyGolfService>();
+builder.Services.AddSingleton<ClaudeService>();
+builder.Services.AddMemoryCache();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSingleton<ITelemetryInitializer, CustomTelemetryInitializer>();
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();

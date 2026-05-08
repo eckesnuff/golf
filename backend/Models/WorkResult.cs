@@ -5,6 +5,7 @@ namespace backend.Models
     {
         public bool Success { get; set; }
         public string Message { get; set; }
+        public string SessionToken { get; set; }
         public static Result Error(string message)
         {
             return new Result
@@ -49,6 +50,7 @@ namespace backend.Models
         {
             this.Message = result.Message;
             this.Success = result.Success;
+            this.SessionToken = result.SessionToken;
         }
         public T Data { get; set; }
     }

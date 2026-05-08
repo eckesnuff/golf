@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.ApplicationInsights;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using backend.Services;
 using backend.Models;
-using Microsoft.AspNetCore.Hosting;
 using System.Security.Cryptography;
-using System.Text;
-using Microsoft.Extensions.Configuration;
 using System.Security.Principal;
 using System.Security.Claims;
 
@@ -27,8 +28,9 @@ namespace backend.Controllers
         private readonly Persistence persistence;
         private readonly IConfiguration configuration;
         private readonly MyGolfDataConverter dataConverter;
+        private readonly IMemoryCache _cache;
 
-        public HcpBoardController(TelemetryClient telemetry, IWebHostEnvironment env, Persistence persistence, IConfiguration configuration,MyGolfService myGolfService)
+        public HcpBoardController(TelemetryClient telemetry, IWebHostEnvironment env, Persistence persistence, IConfiguration configuration, MyGolfService myGolfService, IMemoryCache cache)
         {
             this.myGolfService = myGolfService;
             this.telemetry = telemetry;
@@ -36,6 +38,7 @@ namespace backend.Controllers
             this.persistence = persistence;
             this.configuration = configuration;
             dataConverter = new MyGolfDataConverter(telemetry);
+            _cache = cache;
         }
         // GET api/hcpboard
         [HttpGet]
@@ -114,7 +117,16 @@ namespace backend.Controllers
                 var convertedResult = dataConverter.ConvertFromRawScores(mergedScores, gender, obfuscatedGid);
                 if (!convertedResult.IsValid())
                     return Result.Error("Kunde inte parsa rundor");
-                return Result.OK().WithData(convertedResult);
+
+                var sessionToken = Guid.NewGuid().ToString("N");
+                _cache.Set(sessionToken, new GolferSession
+                {
+                    SystemContext = BuildSystemContext(mergedScores, gender, obfuscatedGid)
+                }, new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(10) });
+
+                var result = Result.OK().WithData(convertedResult);
+                result.SessionToken = sessionToken;
+                return result;
             }
             else if (existingDoc != null)
             {
@@ -123,6 +135,39 @@ namespace backend.Controllers
             }
             return myGolfData;
 
+        }
+
+        private string BuildSystemContext(JArray scores, string gender, string obfuscatedGid)
+        {
+            var sb = new StringBuilder();
+            sb.AppendLine("You are a golf performance analyst. Answer questions about the player's golf rounds.");
+            sb.AppendLine();
+            sb.AppendLine($"Player: {obfuscatedGid} | Gender: {gender}");
+            sb.AppendLine();
+            sb.AppendLine("Field reference:");
+            sb.AppendLine("  date: when the round was played");
+            sb.AppendLine("  clubName / courseName: venue");
+            sb.AppendLine("  hcp: exact handicap index after the round");
+            sb.AppendLine("  points: Stableford score for the full round");
+            sb.AppendLine("  numberOfHolesPlayed: 9 or 18");
+            sb.AppendLine("  pcc: Playing Conditions Calculation adjustment");
+            sb.AppendLine("  type: Regular or competition");
+            sb.AppendLine("  isCalculated: whether the round counts toward handicap");
+            sb.AppendLine("  holes[].number: hole number");
+            sb.AppendLine("  holes[].par: par for the hole (3, 4 or 5)");
+            sb.AppendLine("  holes[].brutto: gross score (actual strokes taken on that hole)");
+            sb.AppendLine();
+            sb.AppendLine("Golf scoring vs par (based on brutto vs par):");
+            sb.AppendLine("  brutto = par - 2 → eagle");
+            sb.AppendLine("  brutto = par - 1 → birdie");
+            sb.AppendLine("  brutto = par     → par");
+            sb.AppendLine("  brutto = par + 1 → bogey");
+            sb.AppendLine("  brutto = par + 2 → double bogey");
+            sb.AppendLine("  Example: brutto 2 on a par 3 = birdie (NOT eagle)");
+            sb.AppendLine();
+            sb.AppendLine("Rounds (newest first):");
+            sb.AppendLine(scores.ToString(Newtonsoft.Json.Formatting.None));
+            return sb.ToString();
         }
 
         private string GenerateUniqueId(string golfId)

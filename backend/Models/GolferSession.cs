@@ -13,4 +13,18 @@ namespace backend.Models
         public string Role { get; set; }
         public string Content { get; set; }
     }
+
+    public class ClaudeReply
+    {
+        public string Text { get; set; }
+        public ClaudeUsage Usage { get; set; }
+    }
+
+    public class ClaudeUsage
+    {
+        public long InputTokens { get; set; }
+        public long OutputTokens { get; set; }
+        public long? CacheCreationTokens { get; set; }
+        public long? CacheReadTokens { get; set; }
+    }
 }

@@ -1,63 +1,53 @@
-using System;
 using System.Collections.Generic;
-using System.Net.Http;
+using System.Linq;
 using System.Threading.Tasks;
+using Anthropic;
+using Anthropic.Models.Messages;
 using backend.Models;
 using Microsoft.Extensions.Configuration;
-using Newtonsoft.Json;
 
 namespace backend.Services
 {
     public class ClaudeService
     {
-        private readonly HttpClient _http = new();
-        private readonly string _apiKey;
-        private const string ApiUrl = "https://api.anthropic.com/v1/messages";
+        private readonly AnthropicClient _client;
         private const string Model = "claude-opus-4-7";
 
         public ClaudeService(IConfiguration config)
         {
-            _apiKey = config["Anthropic:ApiKey"];
+            _client = new AnthropicClient { ApiKey = config["Anthropic:ApiKey"] };
         }
 
-        public async Task<string> AskAsync(string systemContext, List<ClaudeMessage> history)
+        public async Task<ClaudeReply> AskAsync(string systemContext, List<ClaudeMessage> history)
         {
-            var messages = new List<object>();
-            foreach (var msg in history)
-                messages.Add(new { role = msg.Role, content = msg.Content });
-
-            var body = JsonConvert.SerializeObject(new
+            var messages = history.Select(m => new MessageParam
             {
-                model = Model,
-                max_tokens = 2048,
-                system = new[]
+                Role = m.Role == "user" ? Role.User : Role.Assistant,
+                Content = m.Content
+            }).ToList();
+
+            var response = await _client.Messages.Create(new MessageCreateParams
+            {
+                Model = Model,
+                MaxTokens = 2048,
+                System = new List<TextBlockParam>
                 {
-                    new
-                    {
-                        type = "text",
-                        text = systemContext,
-                        cache_control = new { type = "ephemeral" }
-                    }
+                    new() { Text = systemContext, CacheControl = new CacheControlEphemeral() }
                 },
-                messages
+                Messages = messages
             });
 
-            var request = new HttpRequestMessage(HttpMethod.Post, ApiUrl)
+            return new ClaudeReply
             {
-                Content = new StringContent(body, System.Text.Encoding.UTF8, "application/json")
+                Text = response.Content.Select(b => b.Value).OfType<TextBlock>().First().Text,
+                Usage = new ClaudeUsage
+                {
+                    InputTokens = response.Usage.InputTokens,
+                    OutputTokens = response.Usage.OutputTokens,
+                    CacheCreationTokens = response.Usage.CacheCreationInputTokens,
+                    CacheReadTokens = response.Usage.CacheReadInputTokens
+                }
             };
-            request.Headers.Add("x-api-key", _apiKey);
-            request.Headers.Add("anthropic-version", "2023-06-01");
-            request.Headers.Add("anthropic-beta", "prompt-caching-2024-07-31");
-
-            var response = await _http.SendAsync(request);
-            var json = await response.Content.ReadAsStringAsync();
-
-            if (!response.IsSuccessStatusCode)
-                throw new Exception($"Claude API error {response.StatusCode}: {json}");
-
-            dynamic result = JsonConvert.DeserializeObject(json);
-            return (string)result.content[0].text;
         }
     }
 }

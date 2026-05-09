@@ -137,6 +137,42 @@ namespace backend.Controllers
 
         }
 
+        private static JArray TrimScoresForChat(JArray scores)
+        {
+            var result = new JArray();
+            foreach (JObject score in scores)
+            {
+                var trimmed = new JObject
+                {
+                    ["date"]              = score["date"],
+                    ["clubName"]          = score["clubName"],
+                    ["courseName"]        = score["courseName"],
+                    ["playingHcp"]        = score["playingHcp"],
+                    ["adjustedHcp"]       = score["adjustedHcp"],
+                    ["par"]               = score["par"],
+                    ["tee"]               = score["tee"],
+                    ["numberOfHolesPlayed"] = score["numberOfHolesPlayed"],
+                    ["markerName"]        = score["markerName"]
+                };
+
+                if (score["holes"] is JArray holes)
+                {
+                    var trimmedHoles = new JArray();
+                    foreach (JObject hole in holes)
+                        trimmedHoles.Add(new JObject
+                        {
+                            ["number"] = hole["number"],
+                            ["par"]    = hole["par"],
+                            ["brutto"] = hole["brutto"]
+                        });
+                    trimmed["holes"] = trimmedHoles;
+                }
+
+                result.Add(trimmed);
+            }
+            return result;
+        }
+
         private string BuildSystemContext(JArray scores, string gender, string obfuscatedGid)
         {
             var sb = new StringBuilder();
@@ -147,26 +183,28 @@ namespace backend.Controllers
             sb.AppendLine("Field reference:");
             sb.AppendLine("  date: when the round was played");
             sb.AppendLine("  clubName / courseName: venue");
-            sb.AppendLine("  hcp: exact handicap index after the round");
-            sb.AppendLine("  points: Stableford score for the full round");
+            sb.AppendLine("  playingHcp: the handicap strokes the player was allocated for the round");
+            sb.AppendLine("  adjustedHcp: adjusted handicap after the round — can be higher than playingHcp if the player scored worse than their allocation (e.g. playingHcp 5 but played like a 7)");
+            sb.AppendLine("  par: course par");
+            sb.AppendLine("  tee: tee played from");
             sb.AppendLine("  numberOfHolesPlayed: 9 or 18");
-            sb.AppendLine("  pcc: Playing Conditions Calculation adjustment");
-            sb.AppendLine("  type: Regular or competition");
-            sb.AppendLine("  isCalculated: whether the round counts toward handicap");
+            sb.AppendLine("  markerName: name of the marker/scorer");
             sb.AppendLine("  holes[].number: hole number");
             sb.AppendLine("  holes[].par: par for the hole (3, 4 or 5)");
             sb.AppendLine("  holes[].brutto: gross score (actual strokes taken on that hole)");
             sb.AppendLine();
-            sb.AppendLine("Golf scoring vs par (based on brutto vs par):");
-            sb.AppendLine("  brutto = par - 2 → eagle");
-            sb.AppendLine("  brutto = par - 1 → birdie");
-            sb.AppendLine("  brutto = par     → par");
-            sb.AppendLine("  brutto = par + 1 → bogey");
-            sb.AppendLine("  brutto = par + 2 → double bogey");
-            sb.AppendLine("  Example: brutto 2 on a par 3 = birdie (NOT eagle)");
+            sb.AppendLine("Golf scoring terms — always derived from hole.brutto (actual shots taken) vs hole.par (shots needed for par):");
+            sb.AppendLine("  HIO / Hole in one: brutto = 1, regardless of par");
+            sb.AppendLine("  Albatross:         brutto = par - 3");
+            sb.AppendLine("  Eagle:             brutto = par - 2");
+            sb.AppendLine("  Birdie:            brutto = par - 1");
+            sb.AppendLine("  Par:               brutto = par");
+            sb.AppendLine("  Bogey:             brutto = par + 1");
+            sb.AppendLine("  Double bogey:      brutto = par + 2");
+            sb.AppendLine("  Example: brutto 2 on a par 3 = birdie (one less than par, NOT eagle)");
             sb.AppendLine();
             sb.AppendLine("Rounds (newest first):");
-            sb.AppendLine(scores.ToString(Newtonsoft.Json.Formatting.None));
+            sb.AppendLine(TrimScoresForChat(scores).ToString(Newtonsoft.Json.Formatting.None));
             return sb.ToString();
         }
 

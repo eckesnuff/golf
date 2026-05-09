@@ -32,7 +32,7 @@ namespace backend.Controllers
             try
             {
                 var reply = await _claude.AskAsync(session.SystemContext, session.History);
-                session.History.Add(new ClaudeMessage { Role = "assistant", Content = reply });
+                session.History.Add(new ClaudeMessage { Role = "assistant", Content = reply.Text });
                 _cache.Set(request.SessionToken, session, new MemoryCacheEntryOptions { SlidingExpiration = TimeSpan.FromMinutes(10) });
                 return Result.OK().WithData(reply);
             }

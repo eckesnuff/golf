@@ -5,7 +5,8 @@
     <UserSecretsId>cb124b45-957f-49de-ad6f-10a44af60a69</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0"/>
+    <PackageReference Include="Anthropic" Version="12.20.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.22.0" />
     <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.43.1" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="10.0.0" />
   </ItemGroup>

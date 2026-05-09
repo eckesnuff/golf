@@ -211,24 +211,24 @@ tr.old {
         border-top: 1px solid rgba(255,255,255,0.15);
         background: rgba(0,0,0,0.25);
     }
-    .chat-close-btn {
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 0.6em 0.75em;
-        background: rgba(0,0,0,0.25);
-        border: none;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-        color: #fff;
-        font-size: 1.3em;
-        cursor: pointer;
-        width: 100%;
-        box-sizing: border-box;
-        flex-shrink: 0;
-    }
 }
 .chat-close-btn {
     display: none;
+}
+#chat:not(.hidden) .chat-close-btn {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0.6em 0.75em;
+    background: rgba(0,0,0,0.25);
+    border: none;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    color: #fff;
+    font-size: 1.3em;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    flex-shrink: 0;
 }
 .tools input.chat-btn {
     display: none;
@@ -750,7 +750,7 @@ tr.old {
             <button class="chat-close-btn" id="chatClose">&#x2715;</button>
             <div id="chatMessages" class="chat-messages"></div>
             <form id="chatForm">
-                <input type="text" id="chatInput" placeholder="Ställ en fråga om dina rundor..." autocomplete="off" />
+                <input type="text" id="chatInput" placeholder="Ställ en fråga om dina rundor..." autocomplete="new-password" />
                 <input type="submit" class="button" value="Skicka" />
             </form>
         </div>
